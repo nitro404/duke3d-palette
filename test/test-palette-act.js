@@ -101,9 +101,9 @@ describe("Duke3D", function() {
 				// TODO
 			});
 
-			describe("fillWithColor", function() {
+			describe("fillWithColour", function() {
 				it("should be a function", function() {
-					expect(PaletteACT.prototype.fillWithColor).to.be.an.instanceof(Function);
+					expect(PaletteACT.prototype.fillWithColour).to.be.an.instanceof(Function);
 				});
 
 				// TODO

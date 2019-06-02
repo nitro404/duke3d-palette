@@ -177,9 +177,9 @@ describe("Duke3D", function() {
 				// TODO
 			});
 
-			describe("fillWithColor", function() {
+			describe("fillWithColour", function() {
 				it("should be a function", function() {
-					expect(PalettePAL.prototype.fillWithColor).to.be.an.instanceof(Function);
+					expect(PalettePAL.prototype.fillWithColour).to.be.an.instanceof(Function);
 				});
 
 				// TODO

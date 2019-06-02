@@ -45,10 +45,6 @@ describe("Duke3D", function() {
 				expect(PaletteDAT.FileType).to.equal("DAT");
 			});
 
-			it("should have a DATType function property", function() {
-				expect(PaletteDAT.DATType).to.be.an.instanceof(Function);
-			});
-
 			describe("numberOfFileTypes", function() {
 				it("should be a function", function() {
 					expect(PaletteDAT.prototype.numberOfFileTypes).to.be.an.instanceof(Function);
@@ -68,14 +64,6 @@ describe("Duke3D", function() {
 			describe("indexOfFileType", function() {
 				it("should be a function", function() {
 					expect(PaletteDAT.prototype.indexOfFileType).to.be.an.instanceof(Function);
-				});
-
-				// TODO
-			});
-
-			describe("numberOfPalettes", function() {
-				it("should be a function", function() {
-					expect(PaletteDAT.prototype.numberOfPalettes).to.be.an.instanceof(Function);
 				});
 
 				// TODO
@@ -113,9 +101,9 @@ describe("Duke3D", function() {
 				// TODO
 			});
 
-			describe("fillWithColor", function() {
+			describe("fillWithColour", function() {
 				it("should be a function", function() {
-					expect(PaletteDAT.prototype.fillWithColor).to.be.an.instanceof(Function);
+					expect(PaletteDAT.prototype.fillWithColour).to.be.an.instanceof(Function);
 				});
 
 				// TODO

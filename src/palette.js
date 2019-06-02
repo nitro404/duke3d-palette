@@ -364,6 +364,18 @@ class Palette {
 		self.abstractFunction();
 	}
 
+	getPaletteDescriptions() {
+		let self = this;
+
+		let paletteDescriptions = [];
+
+		for(let i = 0; i < self.numberOfSubPalettes(); i++) {
+			paletteDescriptions.push(self.getPaletteDescription(i));
+		}
+
+		return paletteDescriptions;
+	}
+
 	getPaletteDescriptionsAsString() {
 		let self = this;
 
@@ -375,18 +387,6 @@ class Palette {
 			}
 
 			paletteDescriptions += self.getPaletteDescription(i);
-		}
-
-		return paletteDescriptions;
-	}
-
-	getPaletteDescriptions() {
-		let self = this;
-
-		let paletteDescriptions = [];
-
-		for(let i = 0; i < self.numberOfSubPalettes(); i++) {
-			paletteDescriptions.push(self.getPaletteDescription(i));
 		}
 
 		return paletteDescriptions;
@@ -408,7 +408,6 @@ class Palette {
 		}
 
 // TODO: what if not square?
-// TODO: not working for dat
 		return self.getPixel(newValue % Palette.Width, Math.floor(newValue / Palette.Width), index);
 	}
 

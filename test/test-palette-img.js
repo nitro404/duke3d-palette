@@ -21,30 +21,9 @@ describe("Duke3D", function() {
 
 // TODO: check super
 
-			it("should have a FileTypes string array property with a value of [BMP, GIF, PNG]", function() {
-				expect(PaletteIMG.FileTypes).to.be.an.instanceof(Array);
-				expect(PaletteIMG.FileTypes).to.deep.equal(["BMP", "GIF", "PNG"]);
-			});
-
 			it("should have a Description string property with a value of Default", function() {
 				expect(PaletteIMG.Description).to.be.a("string");
 				expect(PaletteIMG.Description).to.equal("Default");
-			});
-
-			describe("setData", function() {
-				it("should be a function", function() {
-					expect(PaletteIMG.prototype.setData).to.be.an.instanceof(Function);
-				});
-
-				// TODO
-			});
-
-			describe("clearData", function() {
-				it("should be a function", function() {
-					expect(PaletteIMG.prototype.clearData).to.be.an.instanceof(Function);
-				});
-
-				// TODO
 			});
 
 			describe("numberOfFileTypes", function() {
@@ -103,9 +82,9 @@ describe("Duke3D", function() {
 				// TODO
 			});
 
-			describe("fillWithColor", function() {
+			describe("fillWithColour", function() {
 				it("should be a function", function() {
-					expect(PaletteIMG.prototype.fillWithColor).to.be.an.instanceof(Function);
+					expect(PaletteIMG.prototype.fillWithColour).to.be.an.instanceof(Function);
 				});
 
 				// TODO

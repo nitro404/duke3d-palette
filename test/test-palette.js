@@ -5,73 +5,44 @@ const path = require("path-extra");
 const fs = require("fs-extra");
 const utilities = require("extra-utilities");
 const ByteBuffer = require("bytebuffer");
+const Colour = require("colour-rgba");
 const Palette = require("../index.js");
+const PaletteACT = require("../src/palette-act.js");
+const PalettePAL = require("../src/palette-pal.js");
+const PaletteDAT = require("../src/palette-dat.js");
+const PaletteIMG = require("../src/palette-img.js");
 const chai = require("chai");
 const expect = chai.expect;
 
-class PaletteA extends Palette {
-	constructor(data, filePath) {
-		super(data, filePath);
-	}
-
-	createNewData() { }
-	numberOfFileTypes() { }
-	getFileType() { }
-	indexOfFileType() { }
-	getPaletteDescription() { }
-	getPixel() { }
-	updatePixel() { }
-	updateColourData() { }
-	fillWithColor() { }
-	validateData() { }
-}
-
-class PaletteB extends Palette {
-	constructor(data, filePath) {
-		super(data, filePath);
-	}
-
-// TODO: abstract stuff is now different
-}
-
-const originalValidateDataFunction = PaletteB.prototype.validateData;
-PaletteB.prototype.validateData = function validateData() { };
-
-const originalCreateNewDataFunction = PaletteB.prototype.createNewData;
-PaletteB.prototype.createNewData = function createNewData() { };
-
-let testPaletteA = null;
-//let testPaletteB = null;
-
 describe("Duke3D", function() {
 	describe("Palette", function() {
-		before(function() {
-			testPaletteA = new PaletteA();
-//			testPaletteB = new PaletteB();
-		});
-
 		it("should be a function", function() {
 			expect(Palette).to.be.an.instanceof(Function);
 		});
 
 		it("should have a function property named Colour", function() {
 			expect(Palette.Colour).to.be.an.instanceof(Function);
+			expect(Palette.Colour).to.equal(Colour);
 		});
 
 		it("should have a function property named ACT", function() {
 			expect(Palette.ACT).to.be.an.instanceof(Function);
+			expect(Palette.ACT).to.equal(PaletteACT);
 		});
 
 		it("should have a function property named DAT", function() {
 			expect(Palette.DAT).to.be.an.instanceof(Function);
+			expect(Palette.DAT).to.equal(PaletteDAT);
 		});
 
 		it("should have a function property named IMG", function() {
 			expect(Palette.IMG).to.be.an.instanceof(Function);
+			expect(Palette.IMG).to.equal(PaletteIMG);
 		});
 
 		it("should have a function property named PAL", function() {
 			expect(Palette.PAL).to.be.an.instanceof(Function);
+			expect(Palette.PAL).to.equal(PalettePAL);
 		});
 
 		it("should have a Width integer property with a value of 16", function() {
@@ -89,11 +60,27 @@ describe("Duke3D", function() {
 			expect(Palette.NumberOfColours).to.equal(256);
 		});
 
+		it("should have a types array property", function() {
+			expect(Palette.types).to.be.an.instanceof(Array);
+		});
+
 		it("should not be instantiable and should throw an error if the constructor is invoked", function() {
 			expect(function() { new Palette(); }).to.throw();
 		});
 
-		describe("setters", function() {
+		describe("getters / setters", function() {
+			describe("paletteSubclass", function() {
+				// TODO
+			});
+
+			describe("fileTypes", function() {
+				// TODO
+			});
+
+			describe("fileType", function() {
+				// TODO
+			});
+
 			describe("filePath", function() {
 				// TODO
 			});
@@ -103,21 +90,73 @@ describe("Duke3D", function() {
 			});
 		});
 
+		describe("static isExtendedBy", function() {
+			it("should be a function", function() {
+				expect(Palette.isExtendedBy).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static numberOfPaletteTypes", function() {
+			it("should be a function", function() {
+				expect(Palette.numberOfPaletteTypes).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static hasPaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.hasPaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static indexOfPaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.indexOfPaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static getPaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.getPaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static addPaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.addPaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static removePaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.removePaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static clearPaletteTypes", function() {
+			it("should be a function", function() {
+				expect(Palette.clearPaletteTypes).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
 		describe("createNewData", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.createNewData).to.be.an.instanceof(Function);
-			});
-
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				PaletteB.prototype.validateData = originalCreateNewDataFunction;
-
-				expect(function() { testPaletteB.validateData(); }).to.throw();
-			});
-		});
-
-		describe("getFilePath", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getFilePath).to.be.an.instanceof(Function);
 			});
 
 			// TODO
@@ -139,72 +178,12 @@ describe("Duke3D", function() {
 			// TODO
 		});
 
-		describe("setFilePath", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.setFilePath).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
-		describe("getData", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getData).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
-		describe("getDataSize", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getDataSize).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
-		describe("setData", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.setData).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
-		describe("clearData", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.clearData).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
-		describe("getType", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getType).to.be.an.instanceof(Function);
-			});
-
-			// TODO
-		});
-
 		describe("numberOfFileTypes", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.numberOfFileTypes).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.numberOfFileTypes(); }).to.throw();
-			});
-		});
-
-		describe("getFileType", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getFileType).to.be.an.instanceof(Function);
-			});
-
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.getFileType(); }).to.throw();
-			});
+			// TODO
 		});
 
 		describe("hasFileType", function() {
@@ -220,22 +199,44 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.indexOfFileType).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.getFileType(); }).to.throw();
-			});
+			// TODO
 		});
 
-		describe("getDefaultFileType", function() {
+		describe("getFileType", function() {
 			it("should be a function", function() {
-				expect(Palette.prototype.getDefaultFileType).to.be.an.instanceof(Function);
+				expect(Palette.prototype.getFileType).to.be.an.instanceof(Function);
 			});
 
 			// TODO
 		});
 
-		describe("numberOfPalettes", function() {
+		describe("addFileType", function() {
 			it("should be a function", function() {
-				expect(Palette.prototype.numberOfPalettes).to.be.an.instanceof(Function);
+				expect(Palette.prototype.addFileType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("removeFileType", function() {
+			it("should be a function", function() {
+				expect(Palette.prototype.removeFileType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("clearFileTypes", function() {
+			it("should be a function", function() {
+				expect(Palette.prototype.clearFileTypes).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("numberOfSubPalettes", function() {
+			it("should be a function", function() {
+				expect(Palette.prototype.numberOfSubPalettes).to.be.an.instanceof(Function);
 			});
 
 			// TODO
@@ -244,16 +245,6 @@ describe("Duke3D", function() {
 		describe("getPaletteDescription", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.getPaletteDescription).to.be.an.instanceof(Function);
-			});
-
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.getPaletteDescription(); }).to.throw();
-			});
-		});
-
-		describe("getPaletteDescriptionsAsString", function() {
-			it("should be a function", function() {
-				expect(Palette.prototype.getPaletteDescriptionsAsString).to.be.an.instanceof(Function);
 			});
 
 			// TODO
@@ -267,14 +258,28 @@ describe("Duke3D", function() {
 			// TODO
 		});
 
+		describe("getPaletteDescriptionsAsString", function() {
+			it("should be a function", function() {
+				expect(Palette.prototype.getPaletteDescriptionsAsString).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
 		describe("getPixel", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.getPixel).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.getPixel(); }).to.throw();
+			// TODO
+		});
+
+		describe("lookupPixel", function() {
+			it("should be a function", function() {
+				expect(Palette.prototype.lookupPixel).to.be.an.instanceof(Function);
 			});
+
+			// TODO
 		});
 
 		describe("updatePixel", function() {
@@ -282,9 +287,7 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.updatePixel).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.updatePixel(); }).to.throw();
-			});
+			// TODO
 		});
 
 		describe("getColourData", function() {
@@ -308,9 +311,7 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.updateColourData).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.updateColourData(); }).to.throw();
-			});
+			// TODO
 		});
 
 		describe("updateAllColourData", function() {
@@ -321,19 +322,25 @@ describe("Duke3D", function() {
 			// TODO
 		});
 
-		describe("fillWithColor", function() {
+		describe("fillWithColour", function() {
 			it("should be a function", function() {
-				expect(Palette.prototype.fillWithColor).to.be.an.instanceof(Function);
+				expect(Palette.prototype.fillWithColour).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				expect(function() { testPaletteA.fillWithColor(); }).to.throw();
-			});
+			// TODO
 		});
 
 		describe("fillAllWithColour", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.fillAllWithColour).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static determinePaletteType", function() {
+			it("should be a function", function() {
+				expect(Palette.determinePaletteType).to.be.an.instanceof(Function);
 			});
 
 			// TODO
@@ -392,11 +399,8 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.validateData).to.be.an.instanceof(Function);
 			});
 
-			it("is abstract and should throw an error when unimplemented in a subclass", function() {
-				PaletteB.prototype.validateData = originalValidateDataFunction;
-
-				expect(function() { testPaletteB.validateData(); }).to.throw();
-			});
+			
+			// TODO
 		});
 
 		describe("isValid", function() {
