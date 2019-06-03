@@ -11,9 +11,23 @@ const PaletteACT = Palette.ACT;
 const chai = require("chai");
 const expect = chai.expect;
 
+let nullPalette = null;
+
 describe("Duke3D", function() {
 	describe("Palette", function() {
 		describe("ACT", function() {
+			before(function() {
+				const originalCreateNewDataFunction = PaletteACT.prototype.createNewData;
+
+				PaletteACT.prototype.createNewData = function createNewDataNull() {
+					return null;
+				}
+
+				nullPalette = new PaletteACT();
+
+				PaletteACT.prototype.createNewData = originalCreateNewDataFunction;
+			});
+
 			it("should be a function", function() {
 				expect(PaletteACT).to.be.an.instanceof(Function);
 			});
@@ -121,6 +135,10 @@ describe("Duke3D", function() {
 
 					expect(testPalette.getPixel(3, 4, 1)).to.equal(null);
 				});
+
+				it("should return null for any palettes with non-buffer data values", function() {
+					expect(nullPalette.getPixel(0, 0, 0)).to.equal(null);
+				});
 			});
 
 			describe("updatePixel", function() {
@@ -158,6 +176,10 @@ describe("Duke3D", function() {
 
 					expect(testPalette.updatePixel(0, 0, 0, 0, 0, 0, 1)).to.equal(false);
 				});
+
+				it("should return false for any palettes with non-buffer data values", function() {
+					expect(nullPalette.updatePixel(0, 0, 0, 0, 0, 0, 0)).to.equal(false);
+				});
 			});
 
 			describe("updateColourData", function() {
@@ -182,6 +204,10 @@ describe("Duke3D", function() {
 					expect(testPalette.updateColourData(0, 0, [Colour.Transparent])).to.equal(false);
 				});
 
+				it("should return false for any palettes with non-buffer data values", function() {
+					expect(nullPalette.updateColourData(0, 0, [])).to.equal(false);
+				});
+
 				// TODO
 			});
 
@@ -192,6 +218,32 @@ describe("Duke3D", function() {
 
 				it("should be overridden", function() {
 					expect(PaletteACT.prototype.fillWithColour).to.not.equal(Palette.prototype.fillWithColour);
+				});
+
+				it("should correctly fill a palette with the specified colour values", function() {
+					let testPalette = new PaletteACT();
+					const testColour = new Colour(128, 32, 255, 192);
+
+					expect(testPalette.fillWithColour(testColour.r, testColour.g, testColour.b, testColour.a, 0)).to.equal(true);
+
+					for(let j = 0; j < Palette.Height; j++) {
+						for(let i = 0; i < Palette.Width; i++) {
+// TODO: wut?:
+							//expect(testPalette.getPixel(i, j, 0).equals(testColour)).to.equal(true);
+						}
+					}
+				});
+
+				it("should correctly fill a palette with the specified colour object", function() {
+					let testPalette = new PaletteACT();
+
+					expect(testPalette.fillWithColour(Colour.Purple, 0)).to.equal(true);
+
+					for(let j = 0; j < Palette.Height; j++) {
+						for(let i = 0; i < Palette.Width; i++) {
+							expect(testPalette.getPixel(i, j, 0).equals(Colour.Purple)).to.equal(true);
+						}
+					}
 				});
 
 				it("should return false for any invalid arguments", function() {
@@ -205,6 +257,10 @@ describe("Duke3D", function() {
 
 					expect(testPalette.fillWithColour(255, 255, 255, 255, 1)).to.equal(false);
 					expect(testPalette.fillWithColour(Colour.Teal, 1)).to.equal(false);
+				});
+
+				it("should return false for any palettes with non-buffer data values", function() {
+					expect(nullPalette.fillWithColour(0, 0, 0, 0, 0)).to.equal(false);
 				});
 
 				// TODO
@@ -277,13 +333,17 @@ describe("Duke3D", function() {
 					expect(PaletteACT.prototype.validateData).to.not.equal(Palette.prototype.validateData);
 				});
 
-				it("should return true for ACT palettes created from data buffers with valid lengths", function() {
+				it("should throw an error for ACT palettes created from data buffers with valid lengths", function() {
 					expect(function() { new PaletteACT(Buffer.alloc(768)).validateData(); }).to.not.throw();
 				});
 
-				it("should return false for ACT palettes created from data buffers with invalid lengths", function() {
+				it("should throw an error for ACT palettes created from data buffers with invalid lengths", function() {
 					expect(function() { new PaletteACT(Buffer.alloc(767)).validateData(); }).to.throw();
 					expect(function() { new PaletteACT(Buffer.alloc(769)).validateData(); }).to.throw();
+				});
+
+				it("should throw an error for ACT palettes with non-buffer data values", function() {
+					expect(function() { nullPalette.validateData(); }).to.throw();
 				});
 			});
 

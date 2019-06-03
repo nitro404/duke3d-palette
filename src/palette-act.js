@@ -112,6 +112,10 @@ class PaletteACT extends Palette {
 	updateColourData(index, dataIndex, colourData) {
 		let self = this;
 
+		if(!Buffer.isBuffer(self.data)) {
+			return false;
+		}
+
 		index = utilities.parseInteger(index);
 
 		if(isNaN(index) || index !== 0) {
@@ -156,6 +160,10 @@ class PaletteACT extends Palette {
 
 	fillWithColour(r, g, b, a, index) {
 		let self = this;
+
+		if(!Buffer.isBuffer(self.data)) {
+			return false;
+		}
 
 		let colour;
 

@@ -142,6 +142,10 @@ class PaletteDAT extends Palette {
 	updateColourData(index, dataIndex, colourData) {
 		let self = this;
 
+		if(!Buffer.isBuffer(self.data)) {
+			return false;
+		}
+
 		if(!PaletteDAT.DATFileType.isValid(self.fileType)) {
 			return false;
 		}
@@ -198,6 +202,10 @@ class PaletteDAT extends Palette {
 
 	fillWithColour(r, g, b, a, index) {
 		let self = this;
+
+		if(!Buffer.isBuffer(self.data)) {
+			return false;
+		}
 
 		if(!PaletteDAT.DATFileType.isValid(self.fileType)) {
 			return false;
