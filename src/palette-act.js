@@ -38,19 +38,19 @@ class PaletteACT extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return null;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return null;
 		}
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return null;
 		}
 
@@ -71,13 +71,13 @@ class PaletteACT extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return false;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return false;
 		}
 
@@ -93,7 +93,7 @@ class PaletteACT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
@@ -114,13 +114,13 @@ class PaletteACT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
 		dataIndex = utilities.parseInteger(dataIndex);
 
-		if(isNaN(dataIndex) || !isFinite(dataIndex)) {
+		if(isNaN(dataIndex)) {
 			return false;
 		}
 
@@ -169,7 +169,7 @@ class PaletteACT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
@@ -210,16 +210,12 @@ class PaletteACT extends Palette {
 	validateData() {
 		let self = this;
 
-		if(self.data === null) {
-			return;
-		}
-
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid ACT palette data, expected buffer object.");
 		}
 
 		// verify that the data is not missing any information, and contains all required colour data
-		if(self.data.length < PaletteACT.PaletteSizeRGB) {
+		if(self.data.length !== PaletteACT.PaletteSizeRGB) {
 			throw new Error("ACT palette data is incomplete or corrupted.");
 		}
 	}

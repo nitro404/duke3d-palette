@@ -54,19 +54,19 @@ class PalettePAL extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return null;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return null;
 		}
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return null;
 		}
 
@@ -87,13 +87,13 @@ class PalettePAL extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return false;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return false;
 		}
 
@@ -109,7 +109,7 @@ class PalettePAL extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
@@ -131,13 +131,13 @@ class PalettePAL extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
 		dataIndex = utilities.parseInteger(dataIndex);
 
-		if(isNaN(dataIndex) || !isFinite(dataIndex)) {
+		if(isNaN(dataIndex)) {
 			return false;
 		}
 
@@ -186,7 +186,7 @@ class PalettePAL extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index !== 0) {
+		if(isNaN(index) || index !== 0) {
 			return false;
 		}
 
@@ -250,10 +250,6 @@ class PalettePAL extends Palette {
 
 	validateData() {
 		let self = this;
-
-		if(self.data === null) {
-			return;
-		}
 
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid PAL palette data, expected buffer object.");
@@ -327,18 +323,8 @@ console.log("version: " + version);
 // TODO: ??
 console.log("numberOfColours: " + numberOfColours);
 
-		if(numberOfColours != Palette.NumberOfColours) {
+		if(numberOfColours !== Palette.NumberOfColours) {
 			throw new Error("PAL palette data has " + numberOfColours + " colour" + (numberOfColours == 1 ? "" : "s") + ", only palettes with " + Palette.NumberOfColours + " colours (" + Palette.Width + " * " + Palette.Height + ") are supported.");
-		}
-
-		// verify that the data is not missing any information, and contains all required colour data
-		if(self.data.length < PalettePAL.HeaderSize + PalettePAL.PaletteSizeRGBA) {
-			throw new Error("PAL palette file is corrupted or missing data, expected " + (PalettePAL.HeaderSize + PalettePAL.PaletteSizeRGBA) + " bytes, found " + self.data.length + " bytes.");
-		}
-
-		// verify that the data is not missing any information, and contains all required colour data
-		if(self.data.length < PalettePAL.HeaderSize + PalettePAL.PaletteSizeRGBA) {
-			throw new Error("PAL palette data is incomplete or corrupted.");
 		}
 	}
 

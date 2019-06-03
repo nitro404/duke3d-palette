@@ -19,7 +19,7 @@ class PaletteFileTypeProperties {
 			set(value) {
 				const newIDCounter = utilities.parseInteger(value);
 
-				if(!isNaN(newIDCounter) && isFinite(newIDCounter) && newIDCounter > _properties.idCounter) {
+				if(!isNaN(newIDCounter) && newIDCounter > _properties.idCounter) {
 					_properties.idCounter = newIDCounter;
 				}
 			}

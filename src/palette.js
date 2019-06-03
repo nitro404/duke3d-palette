@@ -407,7 +407,6 @@ class Palette {
 			return null;
 		}
 
-// TODO: what if not square?
 		return self.getPixel(newValue % Palette.Width, Math.floor(newValue / Palette.Width), index);
 	}
 
@@ -422,7 +421,7 @@ class Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index < 0 || index >= self.numberOfSubPalettes()) {
+		if(isNaN(index) || index < 0 || index >= self.numberOfSubPalettes()) {
 			return null;
 		}
 

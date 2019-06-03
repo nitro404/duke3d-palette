@@ -18,7 +18,9 @@ describe("Duke3D", function() {
 				expect(PalettePAL).to.be.an.instanceof(Function);
 			});
 
-// TODO: check super
+			it("should extend Palette", function() {
+				expect(PalettePAL.prototype).to.be.an.instanceof(Palette);
+			});
 
 			it("should have a DefaultFileExtension string property with a value of PAL", function() {
 				expect(PalettePAL.DefaultFileExtension).to.be.a("string");
@@ -121,25 +123,13 @@ describe("Duke3D", function() {
 				expect(PalettePAL.Description).to.equal("Default");
 			});
 
-			describe("numberOfFileTypes", function() {
+			describe("createNewData", function() {
 				it("should be a function", function() {
-					expect(PalettePAL.prototype.numberOfFileTypes).to.be.an.instanceof(Function);
+					expect(PalettePAL.prototype.createNewData).to.be.an.instanceof(Function);
 				});
 
-				// TODO
-			});
-
-			describe("getFileType", function() {
-				it("should be a function", function() {
-					expect(PalettePAL.prototype.getFileType).to.be.an.instanceof(Function);
-				});
-
-				// TODO
-			});
-
-			describe("indexOfFileType", function() {
-				it("should be a function", function() {
-					expect(PalettePAL.prototype.indexOfFileType).to.be.an.instanceof(Function);
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.createNewData).to.not.equal(Palette.prototype.createNewData);
 				});
 
 				// TODO
@@ -150,12 +140,35 @@ describe("Duke3D", function() {
 					expect(PalettePAL.prototype.getPaletteDescription).to.be.an.instanceof(Function);
 				});
 
-				// TODO
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.getPaletteDescription).to.not.equal(Palette.prototype.getPaletteDescription);
+				});
+
+// TODO: cannot allocate?
+
+				/*it("should return the correct value for valid indexes", function() {
+					expect(new PalettePAL().getPaletteDescription(0)).to.equal("Default");
+				});
+
+				it("should return null for invalid indexes", function() {
+					const palette = new PalettePAL();
+					const invalidIndexes = [null, -1, 1];
+
+					expect(palette.getPaletteDescription()).to.equal(null);
+
+					for(let i = 0; i < invalidIndexes.length; i++) {
+						expect(palette.getPaletteDescription(invalidIndexes[i])).to.equal(null);
+					}
+				});*/
 			});
 
 			describe("getPixel", function() {
 				it("should be a function", function() {
 					expect(PalettePAL.prototype.getPixel).to.be.an.instanceof(Function);
+				});
+
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.getPixel).to.not.equal(Palette.prototype.getPixel);
 				});
 
 				// TODO
@@ -166,12 +179,20 @@ describe("Duke3D", function() {
 					expect(PalettePAL.prototype.updatePixel).to.be.an.instanceof(Function);
 				});
 
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.updatePixel).to.not.equal(Palette.prototype.updatePixel);
+				});
+
 				// TODO
 			});
 
 			describe("updateColourData", function() {
 				it("should be a function", function() {
 					expect(PalettePAL.prototype.updateColourData).to.be.an.instanceof(Function);
+				});
+
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.updateColourData).to.not.equal(Palette.prototype.updateColourData);
 				});
 
 				// TODO
@@ -182,12 +203,32 @@ describe("Duke3D", function() {
 					expect(PalettePAL.prototype.fillWithColour).to.be.an.instanceof(Function);
 				});
 
+				it("should be overridden", function() {
+					expect(PalettePAL.prototype.fillWithColour).to.not.equal(Palette.prototype.fillWithColour);
+				});
+
+				// TODO
+			});
+
+			describe("static getFileTypeForData", function() {
+				it("should be a function", function() {
+					expect(PalettePAL.getFileTypeForData).to.be.an.instanceof(Function);
+				});
+
 				// TODO
 			});
 
 			describe("validateData", function() {
 				it("should be a function", function() {
 					expect(PalettePAL.prototype.validateData).to.be.an.instanceof(Function);
+				});
+
+				// TODO
+			});
+
+			describe("static isPalettePAL", function() {
+				it("should be a function", function() {
+					expect(PalettePAL.isPalettePAL).to.be.an.instanceof(Function);
 				});
 
 				// TODO

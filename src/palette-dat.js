@@ -54,19 +54,19 @@ class PaletteDAT extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return null;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return null;
 		}
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index < 0 || index >= self.numberOfSubPalettes()) {
+		if(isNaN(index) || index < 0 || index >= self.numberOfSubPalettes()) {
 			return null;
 		}
 
@@ -98,13 +98,13 @@ class PaletteDAT extends Palette {
 
 		x = utilities.parseInteger(x);
 
-		if(isNaN(x) || !isFinite(x) || x < 0 || x >= Palette.Width) {
+		if(isNaN(x) || x < 0 || x >= Palette.Width) {
 			return false;
 		}
 
 		y = utilities.parseInteger(y);
 
-		if(isNaN(y) || !isFinite(y) || y < 0 || y >= Palette.Height) {
+		if(isNaN(y) || y < 0 || y >= Palette.Height) {
 			return false;
 		}
 
@@ -120,7 +120,7 @@ class PaletteDAT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index < 0 || index >= self.numberOfSubPalettes()) {
+		if(isNaN(index) || index < 0 || index >= self.numberOfSubPalettes()) {
 			return null;
 		}
 
@@ -148,13 +148,13 @@ class PaletteDAT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index < 0 || index >= self.numberOfSubPalettes()) {
+		if(isNaN(index) || index < 0 || index >= self.numberOfSubPalettes()) {
 			return null;
 		}
 
 		dataIndex = utilities.parseInteger(dataIndex);
 
-		if(isNaN(dataIndex) || !isFinite(dataIndex)) {
+		if(isNaN(dataIndex)) {
 			return false;
 		}
 
@@ -215,7 +215,7 @@ class PaletteDAT extends Palette {
 
 		index = utilities.parseInteger(index);
 
-		if(isNaN(index) || !isFinite(index) || index >= self.numberOfSubPalettes()) {
+		if(isNaN(index) || index >= self.numberOfSubPalettes()) {
 			return null;
 		}
 
@@ -264,10 +264,6 @@ class PaletteDAT extends Palette {
 
 	validateData() {
 		let self = this;
-
-		if(self.data === null) {
-			return;
-		}
 
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid DAT palette data, expected buffer object.");
