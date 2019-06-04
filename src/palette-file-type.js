@@ -115,8 +115,8 @@ class PaletteFileType {
 			return false;
 		}
 
-		return utilities.stringEqualsIgnoreCase(self.name, value.name) &&
-			   utilities.stringEqualsIgnoreCase(self.extension, value.extension);
+		return utilities.equalsIgnoreCase(self.name, value.name) &&
+			   utilities.equalsIgnoreCase(self.extension, value.extension);
 	}
 
 	toString() {
