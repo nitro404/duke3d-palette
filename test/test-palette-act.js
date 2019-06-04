@@ -1,10 +1,6 @@
 "use strict";
 
 const async = require("async");
-const path = require("path-extra");
-const fs = require("fs-extra");
-const utilities = require("extra-utilities");
-const ByteBuffer = require("bytebuffer");
 const Colour = require("colour-rgba");
 const Palette = require("../index.js");
 const PaletteACT = Palette.ACT;
@@ -191,9 +187,24 @@ describe("Duke3D", function() {
 					expect(PaletteACT.prototype.updateColourData).to.not.equal(Palette.prototype.updateColourData);
 				});
 
+				it("should correctly update the palette with a valid colour data array", function() {
+					let testPalette = new PaletteACT();
+					let colourData = [];
+
+					for(let i = 0; i < 256; i++) {
+						colourData[i] = new Colour(i, 255 - i, 69, 255);
+					}
+
+					expect(testPalette.updateColourData(0, 0, colourData)).to.equal(true);
+
+					for(let i = 0; i < 256; i++) {
+						expect(testPalette.lookupPixel(i, 0).equals(new Colour(i, 255 - i, 69, 255))).to.equal(true);
+					}
+				});
+
 				it("should return false for any invalid arguments", function() {
 					const invalidArguments = [NaN, Infinity, -Infinity, null, " ", -1];
-					const testPalette = new PaletteACT();
+					let testPalette = new PaletteACT();
 
 					for(let i = 0; i < invalidArguments.length; i++) {
 						expect(testPalette.updateColourData(invalidArguments[i], 0, [])).to.equal(false);
@@ -207,8 +218,6 @@ describe("Duke3D", function() {
 				it("should return false for any palettes with non-buffer data values", function() {
 					expect(nullPalette.updateColourData(0, 0, [])).to.equal(false);
 				});
-
-				// TODO
 			});
 
 			describe("fillWithColour", function() {
@@ -222,14 +231,13 @@ describe("Duke3D", function() {
 
 				it("should correctly fill a palette with the specified colour values", function() {
 					let testPalette = new PaletteACT();
-					const testColour = new Colour(128, 32, 255, 192);
+					const testColour = new Colour(128, 32, 255, 255);
 
 					expect(testPalette.fillWithColour(testColour.r, testColour.g, testColour.b, testColour.a, 0)).to.equal(true);
 
 					for(let j = 0; j < Palette.Height; j++) {
 						for(let i = 0; i < Palette.Width; i++) {
-// TODO: wut?:
-							//expect(testPalette.getPixel(i, j, 0).equals(testColour)).to.equal(true);
+							expect(testPalette.getPixel(i, j, 0).equals(testColour)).to.equal(true);
 						}
 					}
 				});
@@ -262,8 +270,6 @@ describe("Duke3D", function() {
 				it("should return false for any palettes with non-buffer data values", function() {
 					expect(nullPalette.fillWithColour(0, 0, 0, 0, 0)).to.equal(false);
 				});
-
-				// TODO
 			});
 
 			describe("static getFileTypeForData", function() {
@@ -320,8 +326,6 @@ describe("Duke3D", function() {
 				it("should throw an error when no callback function is provided", function() {
 					expect(function() { PaletteACT.getFileTypeForData(); }).to.throw();
 				});
-
-				// TODO
 			});
 
 			describe("validateData", function() {
