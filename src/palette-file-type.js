@@ -92,7 +92,7 @@ class PaletteFileType {
 	}
 
 	static isExtendedBy(paletteFileTypeSubclass) {
-		if(paletteFileTypeSubclass instanceof Object) {
+		if(!(paletteFileTypeSubclass instanceof Object)) {
 			return false;
 		}
 

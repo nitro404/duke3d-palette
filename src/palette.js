@@ -142,7 +142,7 @@ class Palette {
 	}
 
 	static isExtendedBy(paletteSubclass) {
-		if(paletteSubclass instanceof Object) {
+		if(!(paletteSubclass instanceof Object)) {
 			return false;
 		}
 
