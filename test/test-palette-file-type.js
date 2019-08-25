@@ -14,14 +14,163 @@ const expect = chai.expect;
 describe("Duke3D", function() {
 	describe("Palette", function() {
 		describe("FileType", function() {
-// TODO: getter/setter
+			describe("properties", function() {
+				describe("idCounter", function() {
+					it("should not allow numbers less than itself to be assigned to it", function() {
+						const previousIDCounterValue = PaletteFileType.properties.idCounter;
+
+						PaletteFileType.properties.idCounter = PaletteFileType.properties.idCounter - 1;
+
+						expect(PaletteFileType.properties.idCounter).to.equal(previousIDCounterValue);
+					});
+				});
+			});
+
+			describe("id", function() {
+				it("should be automatically assigned from a serial counter for each instance", function() {
+					const testFileType = new PaletteFileType("Aphex", "Twin");
+
+					expect(testFileType.id).to.be.greaterThan(0);
+					expect(new PaletteFileType("Richard", "James").id).to.equal(testFileType.id + 1);
+				});
+
+				it("should only be settable to the desired value when it is negative", function() {
+					const testFileType = new PaletteFileType(-1, "soccer", "practice");
+
+					expect(testFileType.id).to.not.equal(-42);
+
+					testFileType.id = -42;
+
+					expect(testFileType.id).to.equal(-42);
+
+					testFileType.id = 69;
+
+					expect(testFileType.id).to.not.equal(69);
+				});
+
+				it("should be automatically assigned when an invalid id is specified", function() {
+					const testFileType = new PaletteFileType(null, "Ayy", "Lmao");
+
+					expect(testFileType.id).to.be.greaterThan(0);
+				});
+
+				it("should not be modifyable when an invalid id is specified", function() {
+					const testFileType = new PaletteFileType([], "Tommy", "Cash");
+
+					const previousID = testFileType.id;
+
+					testFileType.id = Infinity;
+
+					expect(testFileType.id).to.equal(previousID);
+				});
+			});
+
+			describe("name", function() {
+				it("should allow string values to be assigned to it", function() {
+					const testFileType = new PaletteFileType("File", "Type");
+
+					testFileType.name = "No";
+
+					expect(testFileType.name).to.equal("No");
+				});
+
+				it("should trim string values assigned to it", function() {
+					const testFileType = new PaletteFileType("Please", "Ignore");
+
+					testFileType.name = " wHiTe sPaCe\t";
+
+					expect(testFileType.name).to.equal("wHiTe sPaCe");
+				});
+
+				it("should default to null for invalid values", function() {
+					const testFileType = new PaletteFileType("What's", "This?");
+
+					testFileType.name = NaN;
+
+					expect(testFileType.name).to.equal(null);
+				});
+			});
+
+			describe("extension", function() {
+				it("should allow string values to be assigned to it", function() {
+					const testFileType = new PaletteFileType("Sample", "Extension");
+
+					testFileType.extension = "EXT";
+
+					expect(testFileType.extension).to.equal("EXT");
+				});
+
+				it("should trim string values assigned to it", function() {
+					const testFileType = new PaletteFileType("123", "456");
+
+					testFileType.extension = "\t\t.  \t  ";
+
+					expect(testFileType.extension).to.equal(".");
+				});
+
+				it("should default to null for invalid values", function() {
+					const testFileType = new PaletteFileType("NOT", "SURE");
+
+					testFileType.extension = NaN;
+
+					expect(testFileType.extension).to.equal(null);
+				});
+
+				it("should convert values to uppercase", function() {
+					const testFileType = new PaletteFileType("404", "Not Found");
+
+					testFileType.extension = "lower";
+
+					expect(testFileType.extension).to.equal("LOWER");
+				});
+			});
 
 			describe("static isExtendedBy", function() {
 				it("should be a function", function() {
 					expect(PaletteFileType.isExtendedBy).to.be.an.instanceof(Function);
 				});
 
-				// TODO
+				it("should return true for a valid class that extends PaletteFileType", function() {
+					class PoolInTheBack extends PaletteFileType {
+						constructor() {
+							super();
+						}
+					}
+
+					expect(PaletteFileType.isExtendedBy(PoolInTheBack)).to.equal(true);
+				});
+
+				it("should return false for a valid class that does not extend PaletteFileType", function() {
+					class TestClass { }
+
+					expect(PaletteFileType.isExtendedBy(TestClass)).to.equal(false);
+				});
+
+				it("should return true for an object instance of a valid class that extends PaletteFileType", function() {
+					class PoolInTheBack extends PaletteFileType {
+						constructor() {
+							super();
+						}
+					}
+
+					const freePool = new PoolInTheBack();
+
+					expect(PaletteFileType.isExtendedBy(freePool)).to.equal(true);
+				});
+
+				it("should return false for PaletteFileType", function() {
+					expect(PaletteFileType.isExtendedBy(PaletteFileType)).to.equal(false);
+				});
+
+				it("should return false for an object instance of PaletteFileType", function() {
+					const paletteFileType = new PaletteFileType();
+
+					expect(PaletteFileType.isExtendedBy(paletteFileType)).to.equal(false);
+				});
+
+				it("should return false for non-object values", function() {
+					expect(PaletteFileType.isExtendedBy(null)).to.equal(false);
+				});
 			});
 
 			describe("equals", function() {
