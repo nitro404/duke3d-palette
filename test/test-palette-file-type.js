@@ -14,6 +14,26 @@ const expect = chai.expect;
 describe("Duke3D", function() {
 	describe("Palette", function() {
 		describe("FileType", function() {
+			describe("constructor", function() {
+				it("should allow new PaletteFileType instances to be created", function() {
+					const testFileType = new PaletteFileType("Rocket", "Skates");
+
+					expect(testFileType).to.be.an.instanceof(PaletteFileType);
+					expect(testFileType.id).to.be.a("number").that.is.greaterThan(0);
+					expect(testFileType.name).to.equal("Rocket");
+					expect(testFileType.extension).to.equal("SKATES");
+				});
+
+				it("should allow a negative id to be specified for the first argument", function() {
+					const testFileType = new PaletteFileType(-69, "Lyrical", "Fluctuation");
+
+					expect(testFileType).to.be.an.instanceof(PaletteFileType);
+					expect(testFileType.id).to.equal(-69);
+					expect(testFileType.name).to.equal("Lyrical");
+					expect(testFileType.extension).to.equal("FLUCTUATION");
+				});
+			});
+
 			describe("properties", function() {
 				describe("idCounter", function() {
 					it("should not allow numbers less than itself to be assigned to it", function() {
@@ -30,7 +50,7 @@ describe("Duke3D", function() {
 				it("should be automatically assigned from a serial counter for each instance", function() {
 					const testFileType = new PaletteFileType("Aphex", "Twin");
 
-					expect(testFileType.id).to.be.greaterThan(0);
+					expect(testFileType.id).to.be.a("number").that.is.greaterThan(0);
 					expect(new PaletteFileType("Richard", "James").id).to.equal(testFileType.id + 1);
 				});
 
@@ -51,7 +71,7 @@ describe("Duke3D", function() {
 				it("should be automatically assigned when an invalid id is specified", function() {
 					const testFileType = new PaletteFileType(null, "Ayy", "Lmao");
 
-					expect(testFileType.id).to.be.greaterThan(0);
+					expect(testFileType.id).to.be.a("number").that.is.greaterThan(0);
 				});
 
 				it("should not be modifyable when an invalid id is specified", function() {
