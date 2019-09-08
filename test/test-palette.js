@@ -143,11 +143,40 @@ describe("Duke3D", function() {
 			});
 
 			describe("fileTypes", function() {
-				// TODO
+				it("should be an empty array by default", function() {
+					const testPalette = new PaletteTest(Buffer.from(""), paletteTestFileType, "default.BIN");
+
+					expect(testPalette.fileTypes).to.be.an("array").that.is.empty;
+				});
+
+				it("should be read-only", function() {
+					const testPalette = new PaletteTest(Buffer.from(""), paletteTestFileType, "default.BIN");
+
+					expect(function() { testPalette.fileTypes = []; }).to.throw(TypeError);
+				});
 			});
 
 			describe("fileType", function() {
-				// TODO
+				it("should allow valid file types to be assigned", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Data.BIN");
+					const testFileType = new Palette.FileType("Test", "TEST");
+
+					expect(paletteTest.fileType).to.equal(paletteTestFileType);
+
+					paletteTest.fileType = testFileType;
+
+					expect(paletteTest.fileType).to.equal(testFileType);
+				});
+
+				it("should assign the special invalid file type when invalid file types are assigned", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Data.BIN");
+					const invalidFileType = new Palette.FileType(-32, "Test", "TEST");
+
+					paletteTest.fileType = invalidFileType;
+
+					expect(paletteTest.fileType).to.not.equal(invalidFileType);
+					expect(paletteTest.fileType).to.equal(Palette.FileType.Invalid);
+				});
 			});
 
 			describe("filePath", function() {
