@@ -254,7 +254,7 @@ class Palette {
 		return utilities.getFileName(self.filePath);
 	}
 
-	getExtension() {
+	getFileExtension() {
 		let self = this;
 
 		return utilities.getFileExtension(self.filePath);
@@ -403,7 +403,7 @@ class Palette {
 
 		const newValue = utilities.parseInteger(value);
 
-		if(isNaN(newValue) || newValue < 0 || newValue > 255) {
+		if(isNaN(newValue) || newValue < 0 || newValue >= Palette.NumberOfColours) {
 			return null;
 		}
 
