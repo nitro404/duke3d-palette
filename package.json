@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "gulp-fabricator": "^1.0.7"
+    "gulp-fabricator": "^1.0.7",
+    "sinon": "^7.4.2"
   }
 }
