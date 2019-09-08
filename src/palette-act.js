@@ -12,7 +12,7 @@ class PaletteACT extends Palette {
 	constructor(data, fileType, filePath) {
 		super(data, fileType, filePath);
 
-		let self = this;
+		const self = this;
 
 		for(let i = 0; i < PaletteACT.FileTypes.length; i++) {
 			self.addFileType(PaletteACT.FileTypes[i]);
@@ -30,7 +30,7 @@ class PaletteACT extends Palette {
 	}
 
 	getPixel(x, y, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return null;
@@ -63,7 +63,7 @@ class PaletteACT extends Palette {
 	}
 
 	updatePixel(x, y, r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -110,7 +110,7 @@ class PaletteACT extends Palette {
 	}
 
 	updateColourData(index, dataIndex, colourData) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -159,7 +159,7 @@ class PaletteACT extends Palette {
 	}
 
 	fillWithColour(r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -216,7 +216,7 @@ class PaletteACT extends Palette {
 	}
 
 	validateData() {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid ACT palette data, expected buffer object.");

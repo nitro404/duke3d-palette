@@ -12,7 +12,7 @@ class PaletteDAT extends Palette {
 	constructor(data, fileType, filePath) {
 		super(data, fileType, filePath);
 
-		let self = this;
+		const self = this;
 
 		for(let i = 0; i < PaletteDAT.DATFileType.FileTypes.length; i++) {
 			self.addFileType(PaletteDAT.DATFileType.FileTypes[i]);
@@ -30,19 +30,19 @@ class PaletteDAT extends Palette {
 	}
 
 	numberOfSubPalettes() {
-		let self = this;
+		const self = this;
 
 		return self.fileType.numberOfSubPalettes();
 	}
 
 	getPaletteDescription(index) {
-		let self = this;
+		const self = this;
 
 		return self.fileType.getDescription(index);
 	}
 
 	getPixel(x, y, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return null;
@@ -86,7 +86,7 @@ class PaletteDAT extends Palette {
 	}
 
 	updatePixel(x, y, r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -140,7 +140,7 @@ class PaletteDAT extends Palette {
 	}
 
 	updateColourData(index, dataIndex, colourData) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -201,7 +201,7 @@ class PaletteDAT extends Palette {
 	}
 
 	fillWithColour(r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -271,7 +271,7 @@ class PaletteDAT extends Palette {
 	}
 
 	validateData() {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid DAT palette data, expected buffer object.");

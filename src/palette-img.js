@@ -13,7 +13,7 @@ class PaletteIMG extends Palette {
 	constructor(data, fileType, filePath) {
 		super(data, fileType, filePath);
 
-		let self = this;
+		const self = this;
 
 		let _properties = {
 			updatingData: false,
@@ -84,7 +84,7 @@ class PaletteIMG extends Palette {
 	}
 
 	createNewData() {
-		let self = this;
+		const self = this;
 
 		// create a new 16x16 jimp image instance with an opaque black background
 		self.image = PaletteIMG.createNewImage();
@@ -103,7 +103,7 @@ class PaletteIMG extends Palette {
 	}
 
 	getPixel(x, y, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return null;
@@ -131,7 +131,7 @@ class PaletteIMG extends Palette {
 	}
 
 	updatePixel(x, y, r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -172,7 +172,7 @@ class PaletteIMG extends Palette {
 	}
 
 	updateColourData(index, dataIndex, colourData) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -216,7 +216,7 @@ class PaletteIMG extends Palette {
 	}
 
 	fillWithColour(r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -280,7 +280,7 @@ class PaletteIMG extends Palette {
 	}
 
 	writeTo(filePath, callback) {
-		let self = this;
+		const self = this;
 
 		// delay writing of data until buffer has finished being retrieved from jimp image
 		if(self.updatingData) {
@@ -293,7 +293,7 @@ class PaletteIMG extends Palette {
 	}
 
 	validateData() {
-		let self = this;
+		const self = this;
 
 		if(self.updatingData) {
 			return setTimeout(function() {
@@ -317,7 +317,7 @@ class PaletteIMG extends Palette {
 	}
 
 	onDataChanged(data) {
-		let self = this;
+		const self = this;
 
 		if(self.updatingData) {
 			return;
@@ -327,19 +327,19 @@ class PaletteIMG extends Palette {
 	}
 
 	onImageChanged(image) {
-		let self = this;
+		const self = this;
 
 		self.updateData();
 	}
 
 	onImageUpdated(image) {
-		let self = this;
+		const self = this;
 
 		self.updateData();
 	}
 
 	updateData() {
-		let self = this;
+		const self = this;
 
 		if(self.updatingData) {
 			return;
@@ -369,7 +369,7 @@ class PaletteIMG extends Palette {
 	}
 
 	updateImage() {
-		let self = this;
+		const self = this;
 
 		if(self.updatingImage) {
 			return;
@@ -408,7 +408,7 @@ class PaletteIMG extends Palette {
 	}
 
 	equals(value) {
-		let self = this;
+		const self = this;
 
 		if(!PaletteIMG.isPaletteIMG(value)) {
 			return false;

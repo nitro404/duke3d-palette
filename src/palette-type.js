@@ -5,7 +5,7 @@ const Palette = require("./palette.js");
 
 class PaletteType {
 	constructor(name, paletteSubclass) {
-		let self = this;
+		const self = this;
 
 		let _properties = {
 			name: null,
@@ -42,7 +42,7 @@ class PaletteType {
 	}
 
 	equals(value) {
-		let self = this;
+		const self = this;
 
 		if(!self.isValid() || !PaletteType.isValid(value)) {
 			return false;
@@ -52,7 +52,7 @@ class PaletteType {
 	}
 
 	toString() {
-		let self = this;
+		const self = this;
 
 		return self.name;
 	}
@@ -62,7 +62,7 @@ class PaletteType {
 	}
 
 	isValid() {
-		let self = this;
+		const self = this;
 
 		return utilities.isNonEmptyString(self.name) &&
 			   self.paletteSubclass instanceof Function &&

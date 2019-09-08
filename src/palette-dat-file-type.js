@@ -17,7 +17,7 @@ class PaletteDATFileType extends PaletteFileType {
 
 		super(id, name, extension);
 
-		let self = this;
+		const self = this;
 
 		let _properties = {
 			descriptions: []
@@ -79,19 +79,19 @@ class PaletteDATFileType extends PaletteFileType {
 	}
 
 	numberOfSubPalettes() {
-		let self = this;
+		const self = this;
 
 		return self.descriptions.length;
 	}
 
 	numberOfDescriptions() {
-		let self = this;
+		const self = this;
 
 		return self.descriptions.length;
 	}
 
 	getDescription(index) {
-		let self = this;
+		const self = this;
 
 		index = utilities.parseInteger(index);
 
@@ -108,7 +108,7 @@ class PaletteDATFileType extends PaletteFileType {
 	}
 
 	isValid() {
-		let self = this;
+		const self = this;
 
 		for(let i = 0; i < self.descriptions.length; i++) {
 			if(utilities.isEmptyString(self.descriptions[i])) {

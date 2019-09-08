@@ -16,7 +16,7 @@ class PaletteIMGFileType extends PaletteFileType {
 
 		super(id, name, extension);
 
-		let self = this;
+		const self = this;
 
 		let _properties = { };
 
@@ -38,7 +38,7 @@ class PaletteIMGFileType extends PaletteFileType {
 	}
 
 	isValid() {
-		let self = this;
+		const self = this;
 
 		return super.isValid() &&
 			   utilities.isNonEmptyString(self.mimeType);

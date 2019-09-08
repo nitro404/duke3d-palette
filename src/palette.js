@@ -9,7 +9,7 @@ const Colour = require("colour-rgba");
 
 class PaletteProperties {
 	constructor() {
-		let self = this;
+		const self = this;
 
 		let _properties = {
 			types: []
@@ -26,7 +26,7 @@ class PaletteProperties {
 
 class Palette {
 	constructor(data, fileType, filePath) {
-		let self = this;
+		const self = this;
 
 		// prevent abstract palette from being instantiated directly
 		if(new.target === Palette) {
@@ -136,7 +136,7 @@ class Palette {
 	}
 
 	abstractFunction() {
-		let self = this;
+		const self = this;
 
 		throw new TypeError(Palette.name + " function is abstract and must be implemented in " + self.paletteSubclass.name + "!");
 	}
@@ -239,13 +239,13 @@ class Palette {
 	}
 
 	createNewData() {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	getFileName() {
-		let self = this;
+		const self = this;
 
 		if(utilities.isEmptyString(self.filePath)) {
 			return null;
@@ -255,25 +255,25 @@ class Palette {
 	}
 
 	getFileExtension() {
-		let self = this;
+		const self = this;
 
 		return utilities.getFileExtension(self.filePath);
 	}
 
 	numberOfFileTypes() {
-		let self = this;
+		const self = this;
 
 		return self.fileTypes.length;
 	}
 
 	hasFileType(fileType) {
-		let self = this;
+		const self = this;
 
 		return self.indexOfFileType() !== -1;
 	}
 
 	indexOfFileType(fileType) {
-		let self = this;
+		const self = this;
 
 		let fileTypeName = null;
 
@@ -298,7 +298,7 @@ class Palette {
 	}
 
 	getFileType(fileType) {
-		let self = this;
+		const self = this;
 
 		const fileTypeIndex = self.indexOfFileType(fileType);
 
@@ -310,7 +310,7 @@ class Palette {
 	}
 
 	addFileType(fileType) {
-		let self = this;
+		const self = this;
 
 		let fileTypeInfo = null;
 
@@ -337,7 +337,7 @@ class Palette {
 	}
 
 	removeFileType(fileType) {
-		let self = this;
+		const self = this;
 
 		const fileTypeIndex = self.indexOfFileType(fileType);
 
@@ -349,7 +349,7 @@ class Palette {
 	}
 
 	clearFileTypes() {
-		let self = this;
+		const self = this;
 
 		self.fileTypes.length = 0;
 	}
@@ -359,13 +359,13 @@ class Palette {
 	}
 
 	getPaletteDescription(index) {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	getPaletteDescriptions() {
-		let self = this;
+		const self = this;
 
 		let paletteDescriptions = [];
 
@@ -377,7 +377,7 @@ class Palette {
 	}
 
 	getPaletteDescriptionsAsString() {
-		let self = this;
+		const self = this;
 
 		let paletteDescriptions = "";
 
@@ -393,13 +393,13 @@ class Palette {
 	}
 
 	getPixel(x, y, index) {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	lookupPixel(value, index) {
-		let self = this;
+		const self = this;
 
 		const newValue = utilities.parseInteger(value);
 
@@ -411,13 +411,13 @@ class Palette {
 	}
 
 	updatePixel(x, y, r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	getColourData(index) {
-		let self = this;
+		const self = this;
 
 		index = utilities.parseInteger(index);
 
@@ -438,7 +438,7 @@ class Palette {
 	}
 
 	getAllColourData() {
-		let self = this;
+		const self = this;
 
 		let colourData = [];
 
@@ -450,25 +450,25 @@ class Palette {
 	}
 
 	updateColourData(index, dataIndex, colourData) {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	updateAllColourData(colourData) {
-		let self = this;
+		const self = this;
 
 		return self.updateColourData(0, 0, colourData);
 	}
 
 	fillWithColour(r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	fillAllWithColour(r, g, b, a) {
-		let self = this;
+		const self = this;
 
 		return self.fillWithColor(r, g, b, a, -1);
 	}
@@ -578,7 +578,7 @@ class Palette {
 	}
 
 	writeTo(filePath, callback) {
-		let self = this;
+		const self = this;
 
 		if(!utilities.isFunction(callback)) {
 			throw new Error("Missing or invalid callback function!");
@@ -625,13 +625,13 @@ class Palette {
 	}
 
 	save() {
-		let self = this;
+		const self = this;
 
 		self.writeTo(self.filePath);
 	}
 
 	equals(value) {
-		let self = this;
+		const self = this;
 
 		if(!Palette.isPalette(value)) {
 			return false;
@@ -651,7 +651,7 @@ class Palette {
 	}
 
 	toString() {
-		let self = this;
+		const self = this;
 
 		return self.paletteSubclass.name + (utilities.isNonEmptyString(self.filePath) ? " (" + utilities.getFileName(self.filePath) + ")" : "");
 	}
@@ -661,13 +661,13 @@ class Palette {
 	}
 
 	validateData() {
-		let self = this;
+		const self = this;
 
 		self.abstractFunction();
 	}
 
 	isValid() {
-		let self = this;
+		const self = this;
 
 		if(!Palette.FileType.isValid(self.fileType)) {
 			return false;

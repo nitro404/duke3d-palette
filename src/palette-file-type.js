@@ -5,7 +5,7 @@ const Palette = require("./palette.js");
 
 class PaletteFileTypeProperties {
 	constructor() {
-		let self = this;
+		const self = this;
 
 		let _properties = {
 			idCounter: 0
@@ -29,7 +29,7 @@ class PaletteFileTypeProperties {
 
 class PaletteFileType {
 	constructor(id, name, extension) {
-		let self = this;
+		const self = this;
 
 		if(typeof id === "string") {
 			extension = name;
@@ -109,7 +109,7 @@ class PaletteFileType {
 	}
 
 	equals(value) {
-		let self = this;
+		const self = this;
 
 		if(!self.isValid() || !PaletteFileType.isValid(value)) {
 			return false;
@@ -120,7 +120,7 @@ class PaletteFileType {
 	}
 
 	toString() {
-		let self = this;
+		const self = this;
 
 		return self.name + " (" + self.extension + ")";
 	}
@@ -130,7 +130,7 @@ class PaletteFileType {
 	}
 
 	isValid() {
-		let self = this;
+		const self = this;
 
 		return self.id >= 0 &&
 			   utilities.isNonEmptyString(self.name) &&

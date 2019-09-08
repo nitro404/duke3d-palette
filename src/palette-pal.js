@@ -12,7 +12,7 @@ class PalettePAL extends Palette {
 	constructor(data, fileType, filePath) {
 		super(data, fileType, filePath);
 
-		let self = this;
+		const self = this;
 
 		for(let i = 0; i < PalettePAL.FileTypes.length; i++) {
 			self.addFileType(PalettePAL.FileTypes[i]);
@@ -46,7 +46,7 @@ class PalettePAL extends Palette {
 	}
 
 	getPixel(x, y, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return null;
@@ -79,7 +79,7 @@ class PalettePAL extends Palette {
 	}
 
 	updatePixel(x, y, r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -127,7 +127,7 @@ class PalettePAL extends Palette {
 	}
 
 	updateColourData(index, dataIndex, colourData) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -176,7 +176,7 @@ class PalettePAL extends Palette {
 	}
 
 	fillWithColour(r, g, b, a, index) {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			return false;
@@ -257,7 +257,7 @@ class PalettePAL extends Palette {
 	}
 
 	validateData() {
-		let self = this;
+		const self = this;
 
 		if(!Buffer.isBuffer(self.data)) {
 			throw new Error("Invalid PAL palette data, expected buffer object.");
