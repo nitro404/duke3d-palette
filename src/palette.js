@@ -470,7 +470,7 @@ class Palette {
 	fillAllWithColour(r, g, b, a) {
 		const self = this;
 
-		return self.fillWithColor(r, g, b, a, -1);
+		return self.fillWithColour(r, g, b, a, -1);
 	}
 
 	static determinePaletteType(data, callback) {
