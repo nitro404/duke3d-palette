@@ -12,6 +12,7 @@ const PalettePAL = require("../src/palette-pal.js");
 const PaletteDAT = require("../src/palette-dat.js");
 const PaletteIMG = require("../src/palette-img.js");
 const chai = require("chai");
+const sinon = require("sinon");
 const expect = chai.expect;
 
 describe("Duke3D", function() {
@@ -115,14 +116,14 @@ describe("Duke3D", function() {
 					static getFileTypeForData() { }
 				}
 
-				const paletteFileTypeTest = new Palette.FileType("Binary", "BIN")
+				const paletteTestFileType = new Palette.FileType("Binary", "BIN")
 
 				let paletteTest = null;
 
-				expect(function() { paletteTest = new PaletteTest(Buffer.from(""), paletteFileTypeTest, "Test.BIN"); }).to.not.throw();
+				expect(function() { paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN"); }).to.not.throw();
 				expect(paletteTest.paletteSubclass).to.equal(PaletteTest);
 				expect(paletteTest.data.equals(Buffer.from(""))).to.equal(true);
-				expect(paletteTest.fileType).to.equal(paletteFileTypeTest);
+				expect(paletteTest.fileType).to.equal(paletteTestFileType);
 				expect(paletteTest.filePath).to.equal("Test.BIN");
 			});
 		});
@@ -143,6 +144,36 @@ describe("Duke3D", function() {
 
 			describe("fileTypes", function() {
 				// TODO
+
+				it("should invoke onFilePathChanged function with the new path value if it is different", function() {
+					class PaletteTest extends Palette {
+						constructor(data, fileType, filePath) {
+							super(data, fileType, filePath);
+						}
+
+						onFilePathChanged() { }
+						createNewData() { }
+						getPaletteDescription() { }
+						getPixel() { }
+						updatePixel() { }
+						updateColourData() { }
+						fillWithColour() { }
+						validateData() { }
+						static getFileTypeForData() { }
+					}
+
+					const paletteTestFileType = new Palette.FileType("Binary", "BIN")
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN");
+
+					sinon.spy(paletteTest, "onFilePathChanged");
+
+					paletteTest.filePath = "Test2.BIN";
+
+					expect(paletteTest.onFilePathChanged.calledOnce).to.equal(true);
+					expect(paletteTest.onFilePathChanged.firstCall.calledWithExactly("Test2.BIN")).to.equal(true);
+
+					paletteTest.onFilePathChanged.restore();
+				});
 			});
 
 			describe("fileType", function() {
@@ -155,6 +186,36 @@ describe("Duke3D", function() {
 
 			describe("data", function() {
 				// TODO
+
+				it("should invoke onDataChanged function with the new data value if it is different", function() {
+					class PaletteTest extends Palette {
+						constructor(data, fileType, filePath) {
+							super(data, fileType, filePath);
+						}
+
+						onDataChanged() { }
+						createNewData() { }
+						getPaletteDescription() { }
+						getPixel() { }
+						updatePixel() { }
+						updateColourData() { }
+						fillWithColour() { }
+						validateData() { }
+						static getFileTypeForData() { }
+					}
+
+					const paletteTestFileType = new Palette.FileType("Binary", "BIN")
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN");
+
+					sinon.spy(paletteTest, "onDataChanged");
+
+					paletteTest.data = Buffer.from("TESTING");
+
+					expect(paletteTest.onDataChanged.calledOnce).to.equal(true);
+					expect(paletteTest.onDataChanged.firstCall.calledWithExactly(paletteTest.data)).to.equal(true);
+
+					paletteTest.onDataChanged.restore();
+				});
 			});
 		});
 
@@ -189,9 +250,15 @@ describe("Duke3D", function() {
 
 					PaletteTest.prototype[abstractFunctionName] = Palette.prototype[abstractFunctionName];
 
+					sinon.spy(paletteTest, "abstractFunction");
+
 					expect(function() { paletteTest[abstractFunctionName](); }).to.throw();
 
 					PaletteTest.prototype[abstractFunctionName] = paletteTestFunctions[abstractFunctionName];
+
+					expect(paletteTest.abstractFunction.calledOnce).to.equal(true);
+
+					paletteTest.abstractFunction.restore();
 				}
 			});
 		});
