@@ -784,7 +784,18 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.fillAllWithColour).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should correctly invoke fillWithColour with the correct r, g, b, a and index values", function() {
+				const testPalette = new PaletteTest("", paletteTestFileType, "DATA.BIN");
+
+				sinon.stub(testPalette, "fillWithColour").callsFake(function() { });
+
+				testPalette.fillAllWithColour(4, 2, 0, 69);
+
+				expect(testPalette.fillWithColour.calledOnce).to.equal(true);
+				expect(testPalette.fillWithColour.firstCall.calledWithExactly(4, 2, 0, 69, -1)).to.equal(true);
+
+				testPalette.fillWithColour.restore();
+			});
 		});
 
 		describe("static determinePaletteType", function() {
