@@ -17,6 +17,10 @@ const expect = chai.expect;
 
 describe("Duke3D", function() {
 	describe("Palette", function() {
+		it("should be a function", function() {
+			expect(Palette).to.be.an.instanceof(Function);
+		});
+
 		class PaletteTest extends Palette {
 			constructor(data, fileType, filePath) {
 				super(data, fileType, filePath);
@@ -33,10 +37,6 @@ describe("Duke3D", function() {
 		}
 
 		const paletteTestFileType = new Palette.FileType("Binary", "BIN");
-
-		it("should be a function", function() {
-			expect(Palette).to.be.an.instanceof(Function);
-		});
 
 		it("should have a function property named Colour", function() {
 			expect(Palette.Colour).to.be.an.instanceof(Function);
