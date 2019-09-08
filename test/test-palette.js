@@ -17,6 +17,23 @@ const expect = chai.expect;
 
 describe("Duke3D", function() {
 	describe("Palette", function() {
+		class PaletteTest extends Palette {
+			constructor(data, fileType, filePath) {
+				super(data, fileType, filePath);
+			}
+
+			createNewData() { }
+			getPaletteDescription() { }
+			getPixel() { }
+			updatePixel() { }
+			updateColourData() { }
+			fillWithColour() { }
+			validateData() { }
+			static getFileTypeForData() { }
+		}
+
+		const paletteTestFileType = new Palette.FileType("Binary", "BIN");
+
 		it("should be a function", function() {
 			expect(Palette).to.be.an.instanceof(Function);
 		});
@@ -71,7 +88,7 @@ describe("Duke3D", function() {
 			});
 
 			it("should throw an error if an abstract static function is not implemented in a subclass", function() {
-				class PaletteTest extends Palette {
+				class PaletteTestAbstractStatic extends Palette {
 					constructor(data, fileType, filePath) {
 						super(data, fileType, filePath);
 					}
@@ -85,11 +102,11 @@ describe("Duke3D", function() {
 					validateData() { }
 				}
 
-				expect(function() { new PaletteTest(); }).to.throw();
+				expect(function() { new PaletteTestAbstractStatic(); }).to.throw();
 			});
 
 			it("should throw an error if an abstract member function is not implemented in a subclass", function() {
-				class PaletteTest extends Palette {
+				class PaletteTestAbstractMember extends Palette {
 					constructor(data, fileType, filePath) {
 						super(data, fileType, filePath);
 					}
@@ -97,27 +114,10 @@ describe("Duke3D", function() {
 					static getFileTypeForData() { }
 				}
 
-				expect(function() { new PaletteTest(); }).to.throw();
+				expect(function() { new PaletteTestAbstractMember(); }).to.throw();
 			});
 
 			it("should allow a valid palette subclass to be instantiated if all abstract features are implemented", function() {
-				class PaletteTest extends Palette {
-					constructor(data, fileType, filePath) {
-						super(data, fileType, filePath);
-					}
-
-					createNewData() { }
-					getPaletteDescription() { }
-					getPixel() { }
-					updatePixel() { }
-					updateColourData() { }
-					fillWithColour() { }
-					validateData() { }
-					static getFileTypeForData() { }
-				}
-
-				const paletteTestFileType = new Palette.FileType("Binary", "BIN")
-
 				let paletteTest = null;
 
 				expect(function() { paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN"); }).to.not.throw();
@@ -151,10 +151,36 @@ describe("Duke3D", function() {
 			});
 
 			describe("filePath", function() {
-				// TODO
+				it("should allow valid strings to be assigned", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Example.BIN");
+
+					paletteTest.filePath = "Valid.BIN";
+
+					expect(paletteTest.filePath).to.equal("Valid.BIN");
+				});
+
+				it("should trim string values assigned to it", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Example.BIN");
+
+					paletteTest.filePath = "  data/EXAMPLE.BIN\t";
+
+					expect(paletteTest.filePath).to.equal("data/EXAMPLE.BIN");
+				});
+
+				it("should assign a value of null when invalid values are provided", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Telepathy.BIN");
+
+					paletteTest.filePath = { };
+
+					expect(paletteTest.filePath).to.equal(null);
+
+					paletteTest.filePath = NaN;
+
+					expect(paletteTest.filePath).to.equal(null);
+				});
 
 				it("should invoke onFilePathChanged function with the new path value if it is different", function() {
-					class PaletteTest extends Palette {
+					class PaletteTestFilePathChanged extends Palette {
 						constructor(data, fileType, filePath) {
 							super(data, fileType, filePath);
 						}
@@ -170,8 +196,7 @@ describe("Duke3D", function() {
 						static getFileTypeForData() { }
 					}
 
-					const paletteTestFileType = new Palette.FileType("Binary", "BIN")
-					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN");
+					const paletteTest = new PaletteTestFilePathChanged(Buffer.from(""), paletteTestFileType, "Test.BIN");
 
 					sinon.spy(paletteTest, "onFilePathChanged");
 
@@ -185,10 +210,68 @@ describe("Duke3D", function() {
 			});
 
 			describe("data", function() {
-				// TODO
+				it("should accept ByteBuffer values", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Testing.BIN");
+					const byteBuffer = new ByteBuffer("With No Head");
+
+					paletteTest.data = byteBuffer;
+
+					expect(paletteTest.data).to.deep.equal(byteBuffer.toBuffer());
+				});
+
+				it("should accept Buffer values", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Testing.BIN");
+					const buffer = Buffer.from("The Edge of Sanity");
+
+					paletteTest.data = buffer;
+
+					expect(paletteTest.data).to.deep.equal(buffer);
+				});
+
+				it("should accept array values", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Testing.BIN");
+
+					paletteTest.data = [65, 66, 67];
+
+					expect(paletteTest.data).to.deep.equal(Buffer.from("ABC"));
+				});
+
+				it("should accept string values", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Testing.BIN");
+
+					paletteTest.data = "Seizure";
+
+					expect(paletteTest.data).to.deep.equal(Buffer.from("Seizure"));
+				});
+
+				it("should invoke createNewData if no data or invalid data is provided", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Testing.BIN");
+
+					sinon.spy(paletteTest, "createNewData");
+
+					paletteTest.data = null;
+
+					expect(paletteTest.createNewData.calledOnce).to.equal(true);
+					expect(paletteTest.createNewData.firstCall.calledWithExactly()).to.equal(true);
+
+					paletteTest.createNewData.restore();
+				});
+
+				it("should invoke validateData if there is any data assigned to the object", function() {
+					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN");
+
+					sinon.spy(paletteTest, "validateData");
+
+					paletteTest.data = Buffer.from("VALIDATION");
+
+					expect(paletteTest.validateData.calledOnce).to.equal(true);
+					expect(paletteTest.validateData.firstCall.calledWithExactly()).to.equal(true);
+
+					paletteTest.validateData.restore();
+				});
 
 				it("should invoke onDataChanged function with the new data value if it is different", function() {
-					class PaletteTest extends Palette {
+					class PaletteTestDataChanged extends Palette {
 						constructor(data, fileType, filePath) {
 							super(data, fileType, filePath);
 						}
@@ -204,8 +287,7 @@ describe("Duke3D", function() {
 						static getFileTypeForData() { }
 					}
 
-					const paletteTestFileType = new Palette.FileType("Binary", "BIN")
-					const paletteTest = new PaletteTest(Buffer.from(""), paletteTestFileType, "Test.BIN");
+					const paletteTest = new PaletteTestDataChanged(Buffer.from(""), paletteTestFileType, "Test.BIN");
 
 					sinon.spy(paletteTest, "onDataChanged");
 
@@ -221,21 +303,6 @@ describe("Duke3D", function() {
 
 		describe("abstractFunction", function() {
 			it("should be invoked and throw an error when a member function is not overridden in a subclass", function() {
-				class PaletteTest extends Palette {
-					constructor(data, fileType, filePath) {
-						super(data, fileType, filePath);
-					}
-
-					createNewData() { }
-					getPaletteDescription() { }
-					getPixel() { }
-					updatePixel() { }
-					updateColourData() { }
-					fillWithColour() { }
-					validateData() { }
-					static getFileTypeForData() { }
-				}
-
 				const paletteTestFunctions = { };
 
 				for(let i = 0; i < Palette.AbstractFunctions.length; i++) {
