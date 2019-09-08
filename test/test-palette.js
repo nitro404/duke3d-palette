@@ -144,6 +144,14 @@ describe("Duke3D", function() {
 
 			describe("fileTypes", function() {
 				// TODO
+			});
+
+			describe("fileType", function() {
+				// TODO
+			});
+
+			describe("filePath", function() {
+				// TODO
 
 				it("should invoke onFilePathChanged function with the new path value if it is different", function() {
 					class PaletteTest extends Palette {
@@ -174,14 +182,6 @@ describe("Duke3D", function() {
 
 					paletteTest.onFilePathChanged.restore();
 				});
-			});
-
-			describe("fileType", function() {
-				// TODO
-			});
-
-			describe("filePath", function() {
-				// TODO
 			});
 
 			describe("data", function() {
