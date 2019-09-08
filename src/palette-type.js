@@ -48,7 +48,7 @@ class PaletteType {
 			return false;
 		}
 
-		return utilities.stringEqualsIgnoreCase(self.name, value.name);
+		return utilities.equalsIgnoreCase(self.name, value.name);
 	}
 
 	toString() {
