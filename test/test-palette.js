@@ -64,13 +64,81 @@ describe("Duke3D", function() {
 			expect(Palette.types).to.be.an.instanceof(Array);
 		});
 
-		it("should not be instantiable and should throw an error if the constructor is invoked", function() {
-			expect(function() { new Palette(); }).to.throw();
+		describe("constructor", function() {
+			it("should not be instantiable and should throw an error if the constructor is invoked", function() {
+				expect(function() { new Palette(); }).to.throw();
+			});
+
+			it("should throw an error if an abstract static function is not implemented in a subclass", function() {
+				class PaletteTest extends Palette {
+					constructor(data, fileType, filePath) {
+						super(data, fileType, filePath);
+					}
+
+					createNewData() { }
+					getPaletteDescription() { }
+					getPixel() { }
+					updatePixel() { }
+					updateColourData() { }
+					fillWithColour() { }
+					validateData() { }
+				}
+
+				expect(function() { new PaletteTest(); }).to.throw();
+			});
+
+			it("should throw an error if an abstract member function is not implemented in a subclass", function() {
+				class PaletteTest extends Palette {
+					constructor(data, fileType, filePath) {
+						super(data, fileType, filePath);
+					}
+
+					static getFileTypeForData() { }
+				}
+
+				expect(function() { new PaletteTest(); }).to.throw();
+			});
+
+			it("should allow a valid palette subclass to be instantiated if all abstract features are implemented", function() {
+				class PaletteTest extends Palette {
+					constructor(data, fileType, filePath) {
+						super(data, fileType, filePath);
+					}
+
+					createNewData() { }
+					getPaletteDescription() { }
+					getPixel() { }
+					updatePixel() { }
+					updateColourData() { }
+					fillWithColour() { }
+					validateData() { }
+					static getFileTypeForData() { }
+				}
+
+				const paletteFileTypeTest = new Palette.FileType("Binary", "BIN")
+
+				let paletteTest = null;
+
+				expect(function() { paletteTest = new PaletteTest(Buffer.from(""), paletteFileTypeTest, "Test.BIN"); }).to.not.throw();
+				expect(paletteTest.paletteSubclass).to.equal(PaletteTest);
+				expect(paletteTest.data.equals(Buffer.from(""))).to.equal(true);
+				expect(paletteTest.fileType).to.equal(paletteFileTypeTest);
+				expect(paletteTest.filePath).to.equal("Test.BIN");
+			});
 		});
 
 		describe("getters / setters", function() {
 			describe("paletteSubclass", function() {
-				// TODO
+				it("should get populated with the palette subclass on instantiation", function() {
+					expect(new Palette.ACT().paletteSubclass).to.equal(Palette.ACT);
+					expect(new Palette.IMG().paletteSubclass).to.equal(Palette.IMG);
+				});
+
+				it("should be read-only", function() {
+					const testPalette = new Palette.ACT();
+
+					expect(function() { testPalette.paletteSubclass = "Virus"; }).to.throw(TypeError);
+				});
 			});
 
 			describe("fileTypes", function() {
@@ -87,6 +155,44 @@ describe("Duke3D", function() {
 
 			describe("data", function() {
 				// TODO
+			});
+		});
+
+		describe("abstractFunction", function() {
+			it("should be invoked and throw an error when a member function is not overridden in a subclass", function() {
+				class PaletteTest extends Palette {
+					constructor(data, fileType, filePath) {
+						super(data, fileType, filePath);
+					}
+
+					createNewData() { }
+					getPaletteDescription() { }
+					getPixel() { }
+					updatePixel() { }
+					updateColourData() { }
+					fillWithColour() { }
+					validateData() { }
+					static getFileTypeForData() { }
+				}
+
+				const paletteTestFunctions = { };
+
+				for(let i = 0; i < Palette.AbstractFunctions.length; i++) {
+					const abstractFunctionName = Palette.AbstractFunctions[i];
+
+					paletteTestFunctions[abstractFunctionName] = PaletteTest.prototype[abstractFunctionName];
+				}
+
+				for(let i = 0; i < Palette.AbstractFunctions.length; i++) {
+					const paletteTest = new PaletteTest();
+					const abstractFunctionName = Palette.AbstractFunctions[i];
+
+					PaletteTest.prototype[abstractFunctionName] = Palette.prototype[abstractFunctionName];
+
+					expect(function() { paletteTest[abstractFunctionName](); }).to.throw();
+
+					PaletteTest.prototype[abstractFunctionName] = paletteTestFunctions[abstractFunctionName];
+				}
 			});
 		});
 
