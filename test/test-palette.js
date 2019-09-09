@@ -843,7 +843,17 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.toString).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should correctly stringify palette instances with no file path", function() {
+				const testPalette = new PaletteTest("FAKE DATA", paletteTestFileType);
+
+				expect(testPalette.toString()).to.equal("PaletteTest");
+			});
+
+			it("should correctly stringify palette instances with a valid file path", function() {
+				const testPalette = new PaletteTest("PREMIUM PRICES", paletteTestFileType, "data/PATH.BIN");
+
+				expect(testPalette.toString()).to.equal("PaletteTest (PATH.BIN)");
+			});
 		});
 
 		describe("static isPalette", function() {
