@@ -851,7 +851,14 @@ describe("Duke3D", function() {
 				expect(Palette.isPalette).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return true for instances of Palette", function() {
+				expect(Palette.isPalette(new PaletteTest("data", paletteTestFileType, "TRUE.BIN"))).to.equal(true);
+			});
+
+			it("should return false for invalid values", function() {
+				expect(Palette.isPalette(null)).to.equal(false);
+				expect(Palette.isPalette({ })).to.equal(false);
+			});
 		});
 
 		describe("validateData", function() {
