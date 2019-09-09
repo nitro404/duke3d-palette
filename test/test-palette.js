@@ -869,7 +869,35 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.isValid).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return true for valid palettes", function() {
+				const testPalette = new PaletteTest("VALID", paletteTestFileType, "VALID.BIN");
+				testPalette.addFileType(paletteTestFileType);
+
+				expect(testPalette.isValid()).to.equal(true);
+			});
+
+			it("should return false if the file type is invalid", function() {
+				const testPalette = new PaletteTest("", new Palette.FileType(-69, "U", "WOT"), "DATA.BIN");
+
+				expect(testPalette.isValid()).to.equal(false);
+			});
+
+			it("should return false if the file type is not in the list of supported file types for the corresponding palette type", function() {
+				const testPalette = new PaletteTest("", paletteTestFileType, "OK.BIN");
+
+				expect(testPalette.isValid()).to.equal(false);
+
+				testPalette.addFileType(new Palette.FileType("Uuuuuuuuu", "UUU"));
+
+				expect(testPalette.isValid()).to.equal(false);
+			});
+
+			it("should return false if the data value is null", function() {
+				const testPalette = new PaletteTest(null, paletteTestFileType, "NULL.BIN");
+				testPalette.addFileType(paletteTestFileType);
+
+				expect(testPalette.isValid()).to.equal(false);
+			});
 		});
 
 		describe("static isValid", function() {
@@ -877,7 +905,40 @@ describe("Duke3D", function() {
 				expect(Palette.isValid).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return true for valid palettes", function() {
+				const testPalette = new PaletteTest("VALID", paletteTestFileType, "VALID.BIN");
+				testPalette.addFileType(paletteTestFileType);
+
+				expect(Palette.isValid(testPalette)).to.equal(true);
+			});
+
+			it("should return false if the file type is invalid", function() {
+				const testPalette = new PaletteTest("", new Palette.FileType(-69, "U", "WOT"), "DATA.BIN");
+
+				expect(Palette.isValid(testPalette)).to.equal(false);
+			});
+
+			it("should return false if the file type is not in the list of supported file types for the corresponding palette type", function() {
+				const testPalette = new PaletteTest("", paletteTestFileType, "OK.BIN");
+
+				expect(Palette.isValid(testPalette)).to.equal(false);
+
+				testPalette.addFileType(new Palette.FileType("Uuuuuuuuu", "UUU"));
+
+				expect(Palette.isValid(testPalette)).to.equal(false);
+			});
+
+			it("should return false if the data value is null", function() {
+				const testPalette = new PaletteTest(null, paletteTestFileType, "NULL.BIN");
+				testPalette.addFileType(paletteTestFileType);
+
+				expect(Palette.isValid(testPalette)).to.equal(false);
+			});
+
+			it("should return false for invalid values", function() {
+				expect(Palette.isValid(null)).to.equal(false);
+				expect(Palette.isValid({ })).to.equal(false);
+			});
 		});
 	});
 });
