@@ -163,7 +163,7 @@ class Palette {
 	}
 
 	static hasPaletteType(type) {
-		return Palette.indexOfPaletteType() !== -1;
+		return Palette.indexOfPaletteType(type) !== -1;
 	}
 
 	static indexOfPaletteType(type) {
@@ -181,7 +181,7 @@ class Palette {
 		}
 
 		for(let i = 0; i < Palette.types.length; i++) {
-			if(utilities.stringEqualsIgnoreCase(Palette.types[i].name, typeName)) {
+			if(utilities.equalsIgnoreCase(Palette.types[i].name, typeName)) {
 				return i;
 			}
 		}

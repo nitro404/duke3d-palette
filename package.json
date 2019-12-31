@@ -8,8 +8,7 @@
     "lint": "gulp lint",
     "test": "mocha",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha --require test/*.js",
-    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "security": "gulp security"
+    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",

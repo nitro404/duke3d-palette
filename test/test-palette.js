@@ -394,7 +394,9 @@ describe("Duke3D", function() {
 				expect(Palette.numberOfPaletteTypes).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should have a default value of 4", function() {
+				expect(Palette.numberOfPaletteTypes()).to.equal(4);
+			});
 		});
 
 		describe("static hasPaletteType", function() {
@@ -402,7 +404,34 @@ describe("Duke3D", function() {
 				expect(Palette.hasPaletteType).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return true for a strict object with a valid name property", function() {
+				expect(Palette.hasPaletteType({ name: "ACT" })).to.equal(true);
+			});
+
+			it("should case insensitively return true for a strict object with a valid name property", function() {
+				expect(Palette.hasPaletteType({ name: "aCt" })).to.equal(true);
+			});
+
+			it("should return true for a valid string", function() {
+				expect(Palette.hasPaletteType("ACT")).to.equal(true);
+			});
+
+			it("should case insensitively return true for a valid string", function() {
+				expect(Palette.hasPaletteType("aCt")).to.equal(true);
+			});
+
+			it("should return false for a strict object with an invalid name property", function() {
+				expect(Palette.hasPaletteType({ name: "No" })).to.equal(false);
+				expect(Palette.hasPaletteType({ })).to.equal(false);
+			});
+
+			it("should return false for an empty or invalid string", function() {
+				expect(Palette.hasPaletteType()).to.equal(false);
+				expect(Palette.hasPaletteType("")).to.equal(false);
+				expect(Palette.hasPaletteType(" ")).to.equal(false);
+				expect(Palette.hasPaletteType("\t")).to.equal(false);
+				expect(Palette.hasPaletteType("No")).to.equal(false);
+			});
 		});
 
 		describe("static indexOfPaletteType", function() {
@@ -410,7 +439,46 @@ describe("Duke3D", function() {
 				expect(Palette.indexOfPaletteType).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return the index of a palette type using a strict object with a valid name property", function() {
+				const paletteTypeIndex = Palette.indexOfPaletteType({ name: "ACT" });
+
+				expect(paletteTypeIndex).to.be.a("number");
+				expect(paletteTypeIndex).to.not.equal(-1);
+			});
+
+			it("should case insensitively return the index of a palette type using a strict object with a valid name property", function() {
+				const paletteTypeIndex = Palette.indexOfPaletteType({ name: "aCt" });
+
+				expect(paletteTypeIndex).to.be.a("number");
+				expect(paletteTypeIndex).to.not.equal(-1);
+			});
+
+			it("should return the index of a palette type using a valid string", function() {
+				const paletteTypeIndex = Palette.indexOfPaletteType("ACT");
+
+				expect(paletteTypeIndex).to.be.a("number");
+				expect(paletteTypeIndex).to.not.equal(-1);
+			});
+
+			it("should case insensitively return the index of a palette type using a valid string", function() {
+				const paletteTypeIndex = Palette.indexOfPaletteType("aCt");
+
+				expect(paletteTypeIndex).to.be.a("number");
+				expect(paletteTypeIndex).to.not.equal(-1);
+			});
+
+			it("should return -1 for a strict object with an invalid name property", function() {
+				expect(Palette.indexOfPaletteType({ name: "No" })).to.equal(-1);
+				expect(Palette.indexOfPaletteType({ })).to.equal(-1);
+			});
+
+			it("should return -1 for an empty or invalid string", function() {
+				expect(Palette.indexOfPaletteType()).to.equal(-1);
+				expect(Palette.indexOfPaletteType("")).to.equal(-1);
+				expect(Palette.indexOfPaletteType(" ")).to.equal(-1);
+				expect(Palette.indexOfPaletteType("\t")).to.equal(-1);
+				expect(Palette.indexOfPaletteType("No")).to.equal(-1);
+			});
 		});
 
 		describe("static getPaletteType", function() {
@@ -418,7 +486,34 @@ describe("Duke3D", function() {
 				expect(Palette.getPaletteType).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return a palette type using a strict object with a valid name property", function() {
+				expect(Palette.getPaletteType({ name: "ACT" })).to.be.an.instanceof(Palette.Type);
+			});
+
+			it("should case insensitively return a palette type using a strict object with a valid name property", function() {
+				expect(Palette.getPaletteType({ name: "aCt" })).to.be.an.instanceof(Palette.Type);
+			});
+
+			it("should return a palette type using a valid string", function() {
+				expect(Palette.getPaletteType("ACT")).to.be.an.instanceof(Palette.Type);
+			});
+
+			it("should case insensitively return a palette type using a valid string", function() {
+				expect(Palette.getPaletteType("aCt")).to.be.an.instanceof(Palette.Type);
+			});
+
+			it("should return null for a strict object with an invalid name property", function() {
+				expect(Palette.getPaletteType({ name: "Missing" })).to.equal(null);
+				expect(Palette.getPaletteType({ })).to.equal(null);
+			});
+
+			it("should return null for an empty or invalid string", function() {
+				expect(Palette.getPaletteType()).to.equal(null);
+				expect(Palette.getPaletteType("")).to.equal(null);
+				expect(Palette.getPaletteType(" ")).to.equal(null);
+				expect(Palette.getPaletteType("\t")).to.equal(null);
+				expect(Palette.getPaletteType("Missing")).to.equal(null);
+			});
 		});
 
 		describe("static addPaletteType", function() {
