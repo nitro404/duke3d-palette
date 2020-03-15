@@ -486,6 +486,15 @@ describe("Duke3D", function() {
 				expect(Palette.getPaletteType).to.be.an.instanceof(Function);
 			});
 
+			it("should return null for invalid palette type indexes", function() {
+				expect(Palette.getPaletteType(-1)).to.be.null;
+				expect(Palette.getPaletteType(80)).to.be.null;
+			});
+
+			it("should return a palette type at a valid index", function() {
+				expect(Palette.getPaletteType(0)).to.equal(Palette.types[0]);
+			});
+
 			it("should return a palette type using a strict object with a valid name property", function() {
 				expect(Palette.getPaletteType({ name: "ACT" })).to.be.an.instanceof(Palette.Type);
 			});
@@ -521,7 +530,47 @@ describe("Duke3D", function() {
 				expect(Palette.addPaletteType).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should throw an error for invalid palette types", function() {
+				expect(function() { Palette.addPaletteType(null, null); }).to.throw(Error);
+				expect(function() { Palette.addPaletteType("TEST", null); }).to.throw(Error);
+				expect(function() { Palette.addPaletteType(null, PaletteTest); }).to.throw(Error);
+				expect(function() { Palette.addPaletteType(new Palette.Type(null, null)); }).to.throw(Error);
+				expect(function() { Palette.addPaletteType(new Palette.Type("TEST", null)); }).to.throw(Error);
+				expect(function() { Palette.addPaletteType(new Palette.Type(null, PaletteTest)); }).to.throw(Error);
+			});
+
+			it("should throw an error for palette types with duplicate names", function() {
+				expect(function() { Palette.addPaletteType("TEST", PaletteTest); }).to.not.throw();
+				expect(function() { Palette.addPaletteType("TEST", PaletteTest); }).to.throw(Error);
+
+				Palette.removePaletteType("TEST");
+			});
+
+			it("should add a valid palette type", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+
+				expect(Palette.hasPaletteType("TEST")).to.be.false;
+
+				expect(function() { Palette.addPaletteType(new Palette.Type("TEST", PaletteTest)); }).to.not.throw();
+
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes + 1);
+				expect(Palette.hasPaletteType("TEST")).to.be.true;
+
+				Palette.removePaletteType("TEST");
+			});
+
+			it("should create and add a new palette type when a type and subclass are provided", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+
+				expect(Palette.hasPaletteType("TEST")).to.be.false;
+
+				expect(function() { Palette.addPaletteType("TEST", PaletteTest); }).to.not.throw();
+
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes + 1);
+				expect(Palette.hasPaletteType("TEST")).to.be.true;
+
+				Palette.removePaletteType("TEST");
+			});
 		});
 
 		describe("static removePaletteType", function() {
@@ -529,7 +578,60 @@ describe("Duke3D", function() {
 				expect(Palette.removePaletteType).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should return null for palette types that do not exist", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+
+				expect(Palette.removePaletteType("TEST")).to.be.null;
+
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes);
+			});
+
+			it("should remove a palette type by index and return it", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+				const testPaletteType = new Palette.Type("TEST", PaletteTest);
+
+				Palette.addPaletteType(testPaletteType);
+
+				const testPaletteTypeIndex = Palette.indexOfPaletteType(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.true;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes + 1);
+
+				expect(Palette.removePaletteType(testPaletteTypeIndex)).to.equal(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.false;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes);
+			});
+
+			it("should remove a palette type by name and return it", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+				const testPaletteType = new Palette.Type("TEST", PaletteTest);
+
+				Palette.addPaletteType(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.true;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes + 1);
+
+				expect(Palette.removePaletteType("TEST")).to.equal(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.false;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes);
+			});
+
+			it("should remove a palette type by value and return it", function() {
+				const previousNumberOfPalettes = Palette.numberOfPaletteTypes();
+				const testPaletteType = new Palette.Type("TEST", PaletteTest);
+
+				Palette.addPaletteType(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.true;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes + 1);
+
+				expect(Palette.removePaletteType(testPaletteType)).to.equal(testPaletteType);
+
+				expect(Palette.hasPaletteType("TEST")).to.be.false;
+				expect(Palette.numberOfPaletteTypes()).to.equal(previousNumberOfPalettes);
+			});
 		});
 
 		describe("static clearPaletteTypes", function() {
@@ -537,7 +639,18 @@ describe("Duke3D", function() {
 				expect(Palette.clearPaletteTypes).to.be.an.instanceof(Function);
 			});
 
-			// TODO
+			it("should remove all palette types", function() {
+				const previousPaletteTypes = Palette.types;
+				const previousNumberOfPaletteTypes = Palette.numberOfPaletteTypes();
+
+				Palette.clearPaletteTypes();
+
+				expect(Palette.numberOfPaletteTypes()).to.equal(0);
+
+				for(let i = 0; i < previousPaletteTypes.length; i++) {
+					Palette.addPaletteType(previousPaletteTypes[i]);
+				}
+			});
 		});
 
 		describe("createNewData", function() {
