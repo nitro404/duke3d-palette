@@ -190,7 +190,11 @@ class Palette {
 	}
 
 	static getPaletteType(type) {
-		const typeIndex = Palette.indexOfPaletteType(type);
+		let typeIndex = type
+
+		if(!Number.isInteger(type) || type < 0 || type >= Palette.types.length) {
+			typeIndex = Palette.indexOfPaletteType(type);
+		}
 
 		if(typeIndex === -1) {
 			return null;
@@ -223,13 +227,17 @@ class Palette {
 	}
 
 	static removePaletteType(type) {
-		const typeIndex = Palette.indexOfPaletteType(type);
+		let typeIndex = type
 
-		if(typeIndex === -1) {
-			return false;
+		if(!Number.isInteger(type) || type < 0 || type >= Palette.types.length) {
+			typeIndex = Palette.indexOfPaletteType(type);
 		}
 
-		return Palette.types.splice(typeIndex, 1);
+		if(typeIndex === -1) {
+			return null;
+		}
+
+		return Palette.types.splice(typeIndex, 1)[0];
 	}
 
 	static clearPaletteTypes() {
