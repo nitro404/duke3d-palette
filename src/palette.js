@@ -169,7 +169,7 @@ class Palette {
 	static indexOfPaletteType(type) {
 		let typeName = null;
 
-		if(utilities.isObjectStrict(type)) {
+		if(utilities.isObject(type)) {
 			typeName = utilities.trimString(type.name);
 		}
 		else if(typeof type === "string") {
