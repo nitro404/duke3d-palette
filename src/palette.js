@@ -210,15 +210,13 @@ class Palette {
 		}
 
 		if(!typeInfo.isValid()) {
-			console.error(Palette.name + " tried to add an invalid palette type!");
-			return false;
+			throw new Error(Palette.name + " tried to add an invalid palette type!");
 		}
 
 		const existingPaletteType = Palette.getPaletteType(typeInfo);
 
 		if(utilities.isValid(existingPaletteType)) {
-			console.warn(Palette.name + " already has a " + existingPaletteType.name + " palette type!");
-			return false;
+			throw new Error(Palette.name + " already has a " + existingPaletteType.name + " palette type!");
 		}
 
 		Palette.types.push(typeInfo);
@@ -322,15 +320,13 @@ class Palette {
 		}
 
 		if(!fileTypeInfo.isValid()) {
-			console.error(self.paletteSubclass.name + " tried to add an invalid palette file type!");
-			return false;
+			throw new Error(self.paletteSubclass.name + " tried to add an invalid palette file type!");
 		}
 
 		const existingFileType = self.getFileType(fileTypeInfo);
 
 		if(utilities.isValid(existingFileType)) {
-			console.warn(self.paletteSubclass.name + " already has a " + existingFileType.name + " palette file type!");
-			return false;
+			throw new Error(self.paletteSubclass.name + " already has a " + existingFileType.name + " palette file type!");
 		}
 
 		self.fileTypes.push(fileTypeInfo);
