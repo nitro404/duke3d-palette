@@ -4,7 +4,11 @@
 [![Build Status][build-status-image]][build-status-url]
 [![Coverage Status][coverage-image]][coverage-url]
 [![Known Vulnerabilities][vulnerabilities-image]][vulnerabilities-url]
+[![Dependencies][dependencies-image]][dependencies-url]
 [![Downloads][npm-downloads-image]][npm-url]
+[![Install Size][install-size-image]][install-size-url]
+[![Contributors][contributors-image]][contributors-url]
+[![Pull Requests Welcome][pull-requests-image]][pull-requests-url]
 
 A module for reading Duke Nukem 3D palette files.
 
@@ -35,3 +39,15 @@ npm install duke3d-palette
 
 [vulnerabilities-url]: https://snyk.io/test/github/nitro404/duke3d-palette?targetFile=package.json
 [vulnerabilities-image]: https://snyk.io/test/github/nitro404/duke3d-palette/badge.svg?targetFile=package.json
+
+[dependencies-url]: https://david-dm.org/nitro404/duke3d-palette
+[dependencies-image]: https://img.shields.io/david/nitro404/duke3d-palette.svg
+
+[install-size-url]: https://packagephobia.now.sh/result?p=duke3d-palette
+[install-size-image]: https://badgen.net/packagephobia/install/duke3d-palette
+
+[contributors-url]: https://github.com/nitro404/duke3d-palette/graphs/contributors
+[contributors-image]: https://img.shields.io/github/contributors/nitro404/duke3d-palette.svg
+
+[pull-requests-url]: https://github.com/nitro404/duke3d-palette/pulls
+[pull-requests-image]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg

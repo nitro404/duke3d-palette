@@ -6,9 +6,10 @@
   "scripts": {
     "build": "gulp build",
     "lint": "gulp lint",
+    "docs": "gulp docs",
     "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha --require test/*.js",
-    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coverage": "nyc npm run test",
+    "coveralls": "npm run coverage && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -31,24 +32,24 @@
   "author": {
     "name": "Kevin Scroggins"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nitro404/duke3d-palette/issues"
   },
   "homepage": "https://github.com/nitro404/duke3d-palette#readme",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.3",
     "bytebuffer": "^5.0.1",
     "colour-rgba": "^1.0.1",
     "extended-math": "^1.0.4",
     "extra-utilities": "^1.3.2",
     "fs-extra": "^6.0.1",
-    "jimp": "^0.6.4",
-    "path-extra": "^4.2.1"
+    "jimp": "^0.6.8",
+    "path-extra": "^4.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "gulp-fabricator": "^1.0.7",
-    "sinon": "^7.4.2"
+    "gulp-fabricator": "^1.2.0",
+    "sinon": "^7.5.0"
   }
 }
