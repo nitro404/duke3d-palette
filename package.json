@@ -1,6 +1,6 @@
 {
   "name": "duke3d-palette",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A module for reading, writing, interacting with and manipulating Duke Nukem 3D palette files.",
   "main": "src/palette.js",
   "scripts": {

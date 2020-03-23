@@ -12,6 +12,10 @@
 
 A module for reading Duke Nukem 3D palette files.
 
+## Note
+
+This is a preview version of this module, it is not yet complete but should be fully functional.
+
 ## Usage
 
 ```javascript
