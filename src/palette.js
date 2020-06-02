@@ -520,6 +520,35 @@ class Palette {
 		);
 	}
 
+	static deserialize(data, filePath, callback) {
+		if(!utilities.isFunction(callback)) {
+			throw new Error("Missing or invalid callback function!");
+		}
+
+		if(utilities.isEmptyString(filePath)) {
+			return callback(new Error("Missing or invalid palette file path."));
+		}
+
+		if(!Buffer.isBuffer(data)) {
+			return callback(new Error("Missing or invalid palette data buffer."));
+		}
+
+		return Palette.determinePaletteType(
+			data,
+			function(error, paletteType, paletteFileType) {
+				if(error) {
+					return callback(error);
+				}
+
+				if(!Palette.Type.isPaletteType(paletteType)) {
+					return callback(new Error("Unable to determine palette type."));
+				}
+
+				return callback(null, new paletteType.paletteSubclass(data, paletteFileType, filePath));
+			}
+		);
+	}
+
 	static readFrom(filePath, callback) {
 		if(!utilities.isFunction(callback)) {
 			throw new Error("Missing or invalid callback function!");
@@ -552,23 +581,13 @@ class Palette {
 					);
 				},
 				function(data, callback) {
-					return Palette.determinePaletteType(
-						data,
-						function(error, paletteType, paletteFileType) {
-							if(error) {
-								return callback(error);
-							}
-
-							if(!Palette.Type.isPaletteType(paletteType)) {
-								return callback(new Error("Unable to determine palette type."));
-							}
-
-							return callback(null, data, paletteType, paletteFileType);
+					return Palette.deserialize(data, filePath, function(error, palette) {
+						if(error) {
+							return callback(error);
 						}
-					);
-				},
-				function(data, paletteType, paletteFileType, callback) {
-					return callback(null, new paletteType.paletteSubclass(data, paletteFileType, filePath));
+
+						return callback(null, palette);
+					});
 				}
 			],
 			function(error, palette) {

@@ -748,6 +748,8 @@ describe("Duke3D", function() {
 				expect(Palette.prototype.getFileType).to.be.an.instanceof(Function);
 			});
 
+			// index
+
 			// TODO
 		});
 
@@ -763,6 +765,8 @@ describe("Duke3D", function() {
 			it("should be a function", function() {
 				expect(Palette.prototype.removeFileType).to.be.an.instanceof(Function);
 			});
+
+			// index
 
 			// TODO
 		});
@@ -1009,6 +1013,14 @@ describe("Duke3D", function() {
 		describe("static determinePaletteType", function() {
 			it("should be a function", function() {
 				expect(Palette.determinePaletteType).to.be.an.instanceof(Function);
+			});
+
+			// TODO
+		});
+
+		describe("static deserialize", function() {
+			it("should be a function", function() {
+				expect(Palette.deserialize).to.be.an.instanceof(Function);
 			});
 
 			// TODO
