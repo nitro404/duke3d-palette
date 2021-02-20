@@ -241,7 +241,7 @@ class Palette {
 	}
 
 	static clearPaletteTypes() {
-		Palette.types.length = 0;
+		Palette.types.splice(0, Palette.types.length);
 	}
 
 	createNewData() {
