@@ -640,7 +640,7 @@ describe("Duke3D", function() {
 			});
 
 			it("should remove all palette types", function() {
-				const previousPaletteTypes = Palette.types;
+				const previousPaletteTypes = [...Palette.types];
 				const previousNumberOfPaletteTypes = Palette.numberOfPaletteTypes();
 
 				Palette.clearPaletteTypes();
