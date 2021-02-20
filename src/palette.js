@@ -520,13 +520,9 @@ class Palette {
 		);
 	}
 
-	static deserialize(data, filePath, callback) {
+	static deserialize(data, callback) {
 		if(!utilities.isFunction(callback)) {
 			throw new Error("Missing or invalid callback function!");
-		}
-
-		if(utilities.isEmptyString(filePath)) {
-			return callback(new Error("Missing or invalid palette file path."));
 		}
 
 		if(!Buffer.isBuffer(data)) {
@@ -544,7 +540,7 @@ class Palette {
 					return callback(new Error("Unable to determine palette type."));
 				}
 
-				return callback(null, new paletteType.paletteSubclass(data, paletteFileType, filePath));
+				return callback(null, new paletteType.paletteSubclass(data, paletteFileType));
 			}
 		);
 	}
@@ -581,10 +577,12 @@ class Palette {
 					);
 				},
 				function(data, callback) {
-					return Palette.deserialize(data, filePath, function(error, palette) {
+					return Palette.deserialize(data, function(error, palette) {
 						if(error) {
 							return callback(error);
 						}
+
+						palette.filePath = filePath;
 
 						return callback(null, palette);
 					});
